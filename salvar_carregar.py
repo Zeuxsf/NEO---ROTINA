@@ -3,12 +3,16 @@ import json
 import conteudo_rotina as cr
 import os
 
-arquivo_rotina = 'dadosrotina.json'
+pasta_destino = 'rotina'
 
-def carregar_rotina(arquivo_rotina):
-    if os.path.exists(arquivo_rotina):
+def carregar_rotina(dia_semana):
+    
+    os.makedirs(pasta_destino,exist_ok=True)
+    caminho_arquivo = os.path.join(pasta_destino, f'{dia_semana}_rotina.json')
+    
+    if os.path.exists(caminho_arquivo):
         try:
-            with open(arquivo_rotina,'r') as file:
+            with open(caminho_arquivo,'r') as file:
                 dados = json.load(file)
                 return dados    
         except (FileNotFoundError , json.JSONDecodeError):
@@ -16,7 +20,11 @@ def carregar_rotina(arquivo_rotina):
     else:
        return  {}
 
-def salvar_rotina(arquivo_rotina,dados):
-    with open(arquivo_rotina,'w') as file:
-        json.dump(dados,file,indent=4,ensure_ascii=True)         
+def salvar_rotina(dia_semana,dados):
+    
+    os.makedirs(pasta_destino,exist_ok=True)
+    caminho_arquivo = os.path.join(pasta_destino, f'{dia_semana}_rotina.json')
+    
+    with open(caminho_arquivo,'w') as file:
+        json.dump(dados,file,indent=4,ensure_ascii=False)         
 

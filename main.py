@@ -1,13 +1,14 @@
 import customtkinter as ctk
-import conteudo_rotina 
-import conteudo_config
-import conteudo_info
-import conteudo_pomodoro
-import conteudo_pontuacao
+import conteudos.conteudo_rotina as conteudo_rotina 
+import conteudos.conteudo_config as conteudo_config
+import conteudos.conteudo_info as conteudo_info
+import conteudos.conteudo_pomodoro as conteudo_pomodoro
+import conteudos.conteudo_pontuacao as conteudo_pontuacao
 from PIL import Image
 import datetime
 import winotify
 import schedule
+import time
 
 
 
@@ -49,6 +50,9 @@ pomodoro_btn_image = ctk.CTkImage(Image.open('imagens/pomodoro.png'), size=(40,4
 aba = ctk.CTkFrame(janela,120,680)
 aba.place(x=1,y=-4)
 
+#Iniciando o programa:
+conteudo_rotina.rotina_atual(conteudo_frame,janela)
+
 #Botões:
 
 #Botão de Configuração (Configurações do programa)
@@ -74,6 +78,7 @@ pontos_btn.place(x=33,y=210)
 #Botão do Pomodoro pessoal
 pomodoro_btn = ctk.CTkButton(aba,10,50,text='',image=pomodoro_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pomodoro.pomodoro(conteudo_frame,janela),hover_color=cor_principal)
 pomodoro_btn.place(x=33,y=305)
+
 
 
 

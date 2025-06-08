@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import json
-import conteudo_rotina as cr
+import conteudos.conteudo_rotina as cr
 import os
 
 pasta_destino = 'rotina'

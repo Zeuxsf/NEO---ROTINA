@@ -116,11 +116,11 @@ def dias(janela, tela_principal, mostrar=False):
                 fg_color=cor_principal,
                 width=20,
                 height=20,
-                command=lambda: criador_de_tarefas(segunda_frame, tela_principal,'seg'),
+                command=lambda: criador_de_tarefas(segunda_frame, tela_principal,'Monday'),
             )
             add_tarefa_btn.place(x=490, y=30)
             
-            iniciar_tela_rotina(segunda_frame,tela_principal,'seg')
+            iniciar_tela_rotina(segunda_frame,tela_principal,'Monday')
 
     def terça():
         if 'Tuesday' in mostrar:
@@ -136,11 +136,11 @@ def dias(janela, tela_principal, mostrar=False):
                 fg_color=cor_principal,
                 width=20,
                 height=20,
-                command=lambda: criador_de_tarefas(terça_frame, tela_principal,'ter'),
+                command=lambda: criador_de_tarefas(terça_frame, tela_principal,'Tuesday'),
             )
             add_tarefa_btn.place(x=490, y=30)
             
-            iniciar_tela_rotina(terça_frame,tela_principal,'ter')
+            iniciar_tela_rotina(terça_frame,tela_principal,'Tuesday')
 
     def quarta():
         if "Wednesday" in mostrar:
@@ -156,11 +156,11 @@ def dias(janela, tela_principal, mostrar=False):
                 fg_color=cor_principal,
                 width=20,
                 height=20,
-                command=lambda: criador_de_tarefas(quarta_frame, tela_principal,'qua'),
+                command=lambda: criador_de_tarefas(quarta_frame, tela_principal,'Wednesday'),
             )
             add_tarefa_btn.place(x=490, y=30)
             
-            iniciar_tela_rotina(quarta_frame,tela_principal,'qui')
+            iniciar_tela_rotina(quarta_frame,tela_principal,'Wednesday')
 
     def quinta():
         if "Thursday" in mostrar:
@@ -177,11 +177,11 @@ def dias(janela, tela_principal, mostrar=False):
                 fg_color=cor_principal,
                 width=20,
                 height=20,
-                command=lambda: criador_de_tarefas(quinta_frame, tela_principal,'qui'),
+                command=lambda: criador_de_tarefas(quinta_frame, tela_principal,'Thursday'),
             )
             add_tarefa_btn.place(x=490, y=30)
             
-            iniciar_tela_rotina(quinta_frame,tela_principal,'qui')            
+            iniciar_tela_rotina(quinta_frame,tela_principal,'Thursday')            
 
     def sexta():
         if "Friday" in mostrar:
@@ -198,11 +198,11 @@ def dias(janela, tela_principal, mostrar=False):
                 fg_color=cor_principal,
                 width=20,
                 height=20,
-                command=lambda: criador_de_tarefas(sexta_frame, tela_principal,'sex'),
+                command=lambda: criador_de_tarefas(sexta_frame, tela_principal,'Friday'),
             )
             add_tarefa_btn.place(x=490, y=30)
             
-            iniciar_tela_rotina(sexta_frame,tela_principal,'sex')            
+            iniciar_tela_rotina(sexta_frame,tela_principal,'Friday')            
 
     def sabado():
         if "Saturday" in mostrar:
@@ -218,11 +218,11 @@ def dias(janela, tela_principal, mostrar=False):
                 fg_color=cor_principal,
                 width=20,
                 height=20,
-                command=lambda: criador_de_tarefas(sabado_frame, tela_principal,'sab'),
+                command=lambda: criador_de_tarefas(sabado_frame, tela_principal,'Saturday'),
             )
             add_tarefa_btn.place(x=490, y=30)
             
-            iniciar_tela_rotina(sabado_frame,tela_principal,'sab')            
+            iniciar_tela_rotina(sabado_frame,tela_principal,'Saturday')            
 
     def domingo():
         if "Sunday" in mostrar:
@@ -239,11 +239,11 @@ def dias(janela, tela_principal, mostrar=False):
                 fg_color=cor_principal,
                 width=20,
                 height=20,
-                command=lambda: criador_de_tarefas(domingo_frame, tela_principal,'dom'),
+                command=lambda: criador_de_tarefas(domingo_frame, tela_principal,'Sunday'),
             )
             add_tarefa_btn.place(x=490, y=30)
             
-            iniciar_tela_rotina(domingo_frame,tela_principal,'dom')            
+            iniciar_tela_rotina(domingo_frame,tela_principal,'Sunday')            
 
     segunda()
     terça()
@@ -270,13 +270,14 @@ def adicionar_tarefa(
 
 
     try:
+        
       #Título e criação do frame que vai acomodar as infs
         tarefa_criada = ctk.CTkFrame(
             frame_dia, 620, 200, border_color="purple2", border_width=1
         )
         tarefa_criada.pack(pady=7)
         
-        dados = j.carregar_rotina('arquivo_rotina.json')
+        dados = j.carregar_rotina(dia_semana)
         
         if nome_da_tarefa == '':
             nome_da_tarefa = 'tarefa_sem_nome'
@@ -388,10 +389,18 @@ def adicionar_tarefa(
         # Check Box
         estado_checkbox = ctk.IntVar(value=check_state)
         
+        def decidir_dia_atual():
+            day = datetime.datetime.now().strftime("%A")
+            return day
+        
         def chechagem():
             dados = j.carregar_rotina(dia_semana)
-            
+                
             dados[nome_da_tarefa]['checkbox'] = estado_checkbox.get()
+            if estado_checkbox.get() == 1:
+                dados[nome_da_tarefa]['pontos'] += 1
+            else:
+                dados[nome_da_tarefa]['pontos'] -= 1    
             
             j.salvar_rotina(dia_semana,dados)   
           
@@ -409,6 +418,13 @@ def adicionar_tarefa(
             command= chechagem
         )
         check.place(x=555, y=10)
+           
+        dia_atual = decidir_dia_atual()
+        
+        if dia_atual != dia_semana:
+            check.configure(state = 'disabled')
+            
+    
 
         # Botão de excluir
         def excluir_taf():
@@ -497,6 +513,7 @@ def adicionar_tarefa(
             "dia": dia_semana,
             "tempo": temp_ou_fix,
             "checkbox": estado_checkbox.get(),
+            "pontos": 0
             }
 
         j.salvar_rotina(dia_semana, dados)
@@ -516,19 +533,54 @@ def rotina_atual(janela, tela_principal):
         day = datetime.datetime.now().strftime("%A")
         return day
     
+    #schedule.every().day.at('00:00').do(reiniciar)
     
-    #schedule.every().day.at('00:00').do(decidir_dia_atual)
     schedule.every(1).second.do(decidir_dia_atual)
     
     def loop_diario():
         schedule.run_pending()
         tela_principal.after(1000, loop_diario)
-    
-    loop_diario()    
+      
     
     dia_atual = decidir_dia_atual()
     
     dias(janela, tela_principal, dia_atual)
+    
+    
+    def encerrar_dia():
+
+        dados = j.carregar_rotina(dia_atual)
+        dados_pontos = j.carregar_pontos()
+        
+        pontos_salvar = 0
+        
+        for nome_tarefa, info in dados.items():
+            info['checkbox'] = 2
+            pontos_salvar += info['pontos']
+            info['pontos'] = 0
+
+        dados_pontos['pontos'] += pontos_salvar
+        
+        j.salvar_rotina(dia_atual,dados)
+        j.salvar_pontos(pontos_salvar,dados_pontos)
+        
+        pontos_salvar = 0
+        
+        rotina_atual(janela,tela_principal)
+        
+        
+    encerrar_dia_btn = ctk.CTkButton(
+    janela,
+    text="Encerrar Dia",
+    fg_color= 'firebrick',
+    hover_color='firebrick4',
+    width=20,
+    height=110,
+    command= encerrar_dia
+            )
+    encerrar_dia_btn.place(x=742,y=255)
+    
+    loop_diario()  
     
  
 

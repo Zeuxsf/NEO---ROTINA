@@ -2,6 +2,7 @@ import customtkinter as ctk
 import salvar_carregar as j
 import schedule
 import datetime
+import winotify
 
 # Área de cores:
 dark_ou_light = "dark"
@@ -92,7 +93,8 @@ def iniciar_tela_rotina(frame_dia,tela_principal,dia):
                          hora_fim=info['hora_fim'],
                          dia_semana=info['dia'],
                          check_state = info['checkbox'],
-                         tela_principal=tela_principal
+                         tela_principal=tela_principal,
+                         carregando = True
                          )
         
         
@@ -265,7 +267,8 @@ def adicionar_tarefa(
     hora_fim=23,
     min_fim=59,
     dia_semana = '',
-    check_state = 0
+    check_state = 0,
+    carregando = False
 ):
 
 
@@ -441,80 +444,116 @@ def adicionar_tarefa(
         excluir_btn.place(x=525, y=110)
 
         # Horario
-        if len(hora_inicio) > 2 or len(hora_inicio) < 2:
-            hora_inicio = 11
-        if len(min_inicio) > 2 or len(min_inicio) < 2:
-            min_inicio = 59
-        if len(hora_fim) > 2 or len(hora_fim) < 2:
-            hora_fim = 23
-        if len(min_fim) > 2 or len(min_fim) < 2:
-            min_fim = 59
-
-        try:
-            hora_inicio = int(hora_inicio)
-        except:
-           hora_inicio = 11
-        
-        try:       
-            hora_fim = int(hora_fim)
-        except:
-           hora_fim = 23
-        
-        try:    
-            min_inicio = int(min_inicio)
-        except:
-           min_inicio = 59
-        
-        try:
-           min_fim = int(min_fim)
-        except:
-           min_fim = 59
-          
-
-        if hora_inicio > 23:
-            hora_inicio = 11
-        if min_inicio > 59:
-            min_inicio = 59
-        if hora_fim > 23:
-            hora_fim = 23
-        if min_fim > 59:
-            min_fim = 59
-
-        horainicio_text = ctk.CTkEntry(
+        if carregando == True:
+            horainicio_text = ctk.CTkEntry(
             tarefa_criada,
             53,
             30,
-            placeholder_text=f"{hora_inicio} : {min_inicio}",
+            placeholder_text=hora_inicio,
             placeholder_text_color="green",
-        )
-        horainicio_text.place(x=190, y=155)
-        horainicio_text.configure(state="disabled")
+            )
+            horainicio_text.place(x=190, y=155)
+            horainicio_text.configure(state="disabled")
 
-        horafim_text = ctk.CTkEntry(
-            tarefa_criada,
-            53,
-            30,
-            placeholder_text=f"{hora_fim} : {min_fim}",
-            placeholder_text_color="firebrick2",
-        )
-        horafim_text.place(x=270, y=155)
-        horafim_text.configure(state="disabled")
+            horafim_text = ctk.CTkEntry(
+                tarefa_criada,
+                53,
+                30,
+                placeholder_text=hora_fim,
+                placeholder_text_color="firebrick2",
+            )
+            horafim_text.place(x=270, y=155)
+            horafim_text.configure(state="disabled")
+        else:
+            if len(hora_inicio) > 2 or len(hora_inicio) < 2:
+                hora_inicio = 11
+            if len(min_inicio) > 2 or len(min_inicio) < 2:
+                min_inicio = 59
+            if len(hora_fim) > 2 or len(hora_fim) < 2:
+                hora_fim = 23
+            if len(min_fim) > 2 or len(min_fim) < 2:
+                min_fim = 59
+
+            try:
+                hora_inicio = int(hora_inicio)
+            except:
+                hora_inicio = 11
+            
+            try:       
+                hora_fim = int(hora_fim)
+            except:
+                hora_fim = 23
+            
+            try:    
+                min_inicio = int(min_inicio)
+            except:
+               min_inicio = 59
+            
+            try:
+                min_fim = int(min_fim)
+            except:
+                min_fim = 59
+            
+
+            if hora_inicio > 23:
+                hora_inicio = 11
+            if min_inicio > 59:
+                min_inicio = 59
+            if hora_fim > 23:
+                hora_fim = 23
+            if min_fim > 59:
+                min_fim = 59
+
+            hora_inicio = str(hora_inicio).zfill(2)
+            min_inicio = str(min_inicio).zfill(2)
+            hora_fim = str(hora_fim).zfill(2)
+            min_fim = str(min_fim).zfill(2)
+            
+            horainicio_text = ctk.CTkEntry(
+                tarefa_criada,
+                53,
+                30,
+                placeholder_text=f"{hora_inicio} : {min_inicio}",
+                placeholder_text_color="green",
+            )
+            horainicio_text.place(x=190, y=155)
+            horainicio_text.configure(state="disabled")
+
+            horafim_text = ctk.CTkEntry(
+                tarefa_criada,
+                53,
+                30,
+                placeholder_text=f"{hora_fim} : {min_fim}",
+                placeholder_text_color="firebrick2",
+            )
+            horafim_text.place(x=270, y=155)
+            horafim_text.configure(state="disabled")
 
 #Salvar no arquivo
         tela_principal.geometry("1000x650")
         
 
         dados = j.carregar_rotina(dia_semana)
-        
-        dados[nome_da_tarefa] = {
+        if carregando == True:
+            dados[nome_da_tarefa] = {
             "desc": desc_da_tarefa,
-            "hora_inicio": f"{hora_inicio}:{min_inicio}",
-            "hora_fim": f"{hora_fim}:{min_fim}",
+            "hora_inicio": f"{hora_inicio}",
+            "hora_fim": f"{hora_fim}",
             "dia": dia_semana,
             "tempo": temp_ou_fix,
             "checkbox": estado_checkbox.get(),
             "pontos": 0
             }
+        else:    
+            dados[nome_da_tarefa] = {
+                "desc": desc_da_tarefa,
+                "hora_inicio": f"{hora_inicio}:{min_inicio}",
+                "hora_fim": f"{hora_fim}:{min_fim}",
+                "dia": dia_semana,
+                "tempo": temp_ou_fix,
+                "checkbox": estado_checkbox.get(),
+                "pontos": 0
+                }
 
         j.salvar_rotina(dia_semana, dados)
         
@@ -533,9 +572,7 @@ def rotina_atual(janela, tela_principal):
         day = datetime.datetime.now().strftime("%A")
         return day
     
-    #schedule.every().day.at('00:00').do(reiniciar)
-    
-    schedule.every(1).second.do(decidir_dia_atual)
+    schedule.every(10).seconds.do(decidir_dia_atual)
     
     def loop_diario():
         schedule.run_pending()
@@ -544,13 +581,22 @@ def rotina_atual(janela, tela_principal):
     
     dia_atual = decidir_dia_atual()
     
+    dados = j.carregar_rotina(dia_atual)
+    dados_pontos = j.carregar_pontos()
+    
     dias(janela, tela_principal, dia_atual)
     
     
+    def notificar(titulo, mensagem):
+        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem)
+        notificação.show()
+    
+    for tarefa, info in dados.items():
+        schedule.every().day.at(info['hora_inicio']).do(lambda t= tarefa, i= info['desc']: notificar(f'Começando: {t}',i))
+        schedule.every().day.at(info['hora_fim']).do(lambda t= tarefa, i= info['desc']: notificar(f'Terminando: {t}',i))
+        
+    #Botão de recolher os pontos pelas tarefas feitas e reiniciar todas as tarefas
     def encerrar_dia():
-
-        dados = j.carregar_rotina(dia_atual)
-        dados_pontos = j.carregar_pontos()
         
         pontos_salvar = 0
         
@@ -580,7 +626,9 @@ def rotina_atual(janela, tela_principal):
             )
     encerrar_dia_btn.place(x=742,y=255)
     
-    loop_diario()  
+    loop_diario()
+    
+      
     
  
 

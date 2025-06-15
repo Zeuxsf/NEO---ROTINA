@@ -8,12 +8,28 @@ from PIL import Image
 import datetime
 import winotify
 import schedule
-import time
+import json
+import salvar_carregar as j
 
 
 
 agora = datetime.datetime.now()
-print(agora)
+hora = agora.strftime("%H:%M")
+print(agora, hora)
+
+def decidir_dia_atual():
+        dia_atual = datetime.datetime.now().strftime("%A")
+        return dia_atual
+
+dados = j.carregar_rotina('Sunday')
+
+def notificar(titulo, mensagem):
+        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem)
+        notificação.show()    
+        
+for tarefa, info in dados.items():
+    schedule.every().day.at(info['hora_inicio']).do(lambda t= tarefa, i= info['desc']: notificar(f'Começando: {t}',i))
+    schedule.every().day.at(info['hora_fim']).do(lambda t= tarefa, i= info['desc']: notificar(f'Terminando: {t}',i))
 
 
 #Área de cores:
@@ -79,7 +95,11 @@ pontos_btn.place(x=33,y=210)
 pomodoro_btn = ctk.CTkButton(aba,10,50,text='',image=pomodoro_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pomodoro.pomodoro(conteudo_frame,janela),hover_color=cor_principal)
 pomodoro_btn.place(x=33,y=305)
 
+def loop_diario(tela_principal):
+        schedule.run_pending()
+        tela_principal.after(1000, lambda: loop_diario(janela))    
+        
 
-
+loop_diario(janela)
 
 janela.mainloop()

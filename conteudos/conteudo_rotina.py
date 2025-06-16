@@ -46,10 +46,10 @@ def criador_de_tarefas(frame_dia, tela_principal,dia):
     hora_fim.place(x=140, y=265)
     min_fim.place(x=180, y=265)
 
-    variavel_escolha = ctk.IntVar(value=0)
+    variavel_escolha = ctk.IntVar(value=1)
 
     temporario_escolha = ctk.CTkRadioButton(
-        tarefatela, text="Temporária", variable=variavel_escolha, value=1
+        tarefatela, text="Temporária", variable=variavel_escolha, value=1,fg_color='yellow'
     )
     fixo_escolha = ctk.CTkRadioButton(
         tarefatela, text="Fixa", variable=variavel_escolha, value=2
@@ -585,16 +585,7 @@ def rotina_atual(janela, tela_principal):
     dados_pontos = j.carregar_pontos()
     
     dias(janela, tela_principal, dia_atual)
-    
-    
-    def notificar(titulo, mensagem):
-        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem)
-        notificação.show()
-    
-    for tarefa, info in dados.items():
-        schedule.every().day.at(info['hora_inicio']).do(lambda t= tarefa, i= info['desc']: notificar(f'Começando: {t}',i))
-        schedule.every().day.at(info['hora_fim']).do(lambda t= tarefa, i= info['desc']: notificar(f'Terminando: {t}',i))
-        
+          
     #Botão de recolher os pontos pelas tarefas feitas e reiniciar todas as tarefas
     def encerrar_dia():
         
@@ -628,11 +619,7 @@ def rotina_atual(janela, tela_principal):
     
     loop_diario()
     
-      
     
- 
-
-
 def rotinas(janela, tela_principal):
     for widget in janela.winfo_children():
         widget.destroy()

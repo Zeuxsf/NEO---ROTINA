@@ -2,6 +2,8 @@ import customtkinter as ctk
 import json
 import conteudos.conteudo_rotina as cr
 import os
+import schedule
+import datetime
 
 pasta_destino = 'rotina'
 
@@ -54,5 +56,5 @@ def salvar_pontos(quantidade,dados):
     
     with open(caminho_arquivo, 'w') as file:
         json.dump(dados,file)
-    
-    
+
+        

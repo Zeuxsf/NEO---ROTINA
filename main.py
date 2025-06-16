@@ -17,20 +17,6 @@ agora = datetime.datetime.now()
 hora = agora.strftime("%H:%M")
 print(agora, hora)
 
-def decidir_dia_atual():
-        dia_atual = datetime.datetime.now().strftime("%A")
-        return dia_atual
-
-dados = j.carregar_rotina('Sunday')
-
-def notificar(titulo, mensagem):
-        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem)
-        notificação.show()    
-        
-for tarefa, info in dados.items():
-    schedule.every().day.at(info['hora_inicio']).do(lambda t= tarefa, i= info['desc']: notificar(f'Começando: {t}',i))
-    schedule.every().day.at(info['hora_fim']).do(lambda t= tarefa, i= info['desc']: notificar(f'Terminando: {t}',i))
-
 
 #Área de cores:
 dark_ou_light = 'dark'
@@ -95,10 +81,43 @@ pontos_btn.place(x=33,y=210)
 pomodoro_btn = ctk.CTkButton(aba,10,50,text='',image=pomodoro_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pomodoro.pomodoro(conteudo_frame,janela),hover_color=cor_principal)
 pomodoro_btn.place(x=33,y=305)
 
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Funções reutilizáveis para recarregar as notificações em todo o programa
+def decidir_dia_atual():
+    dia_atual = datetime.datetime.now().strftime("%A")
+    return dia_atual
+
+
+def notificar(titulo, mensagem):
+        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem)
+        notificação.show()           
+
+
 def loop_diario(tela_principal):
         schedule.run_pending()
-        tela_principal.after(1000, lambda: loop_diario(janela))    
-        
+        tela_principal.after(1000, lambda: loop_diario(janela))
+
+
+def recarregar_notifi():
+    dia_atual = decidir_dia_atual()    
+    dados = j.carregar_rotina(dia_atual)
+            
+    for tarefa, info in list(dados.items()):
+        try:
+                    
+            schedule.every().day.at(info['hora_inicio']).do(lambda t= tarefa, i= info['desc']: notificar(f'Começando: {t}',i))    
+            schedule.every().day.at(info['hora_fim']).do(lambda t= tarefa, i= info['desc']: notificar(f'Terminando: {t}',i))
+            if info['tempo'] == 1:
+                if hora > info['hora_fim']:
+                    dados = j.carregar_rotina(dia_atual)
+                    del dados[tarefa]
+                    j.salvar_rotina(dia_atual, dados)
+                  
+        except:
+            print('Notificação inexistente.')    
+
+schedule.every(30).seconds.do(recarregar_notifi)            
 
 loop_diario(janela)
 

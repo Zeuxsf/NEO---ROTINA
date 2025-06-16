@@ -108,7 +108,7 @@ def recarregar_notifi():
                     
             schedule.every().day.at(info['hora_inicio']).do(lambda t= tarefa, i= info['desc']: notificar(f'Começando: {t}',i))    
             schedule.every().day.at(info['hora_fim']).do(lambda t= tarefa, i= info['desc']: notificar(f'Terminando: {t}',i))
-            if info['tempo'] == 1:
+            if info['tempo'] == 1 :
                 if hora > info['hora_fim']:
                     dados = j.carregar_rotina(dia_atual)
                     del dados[tarefa]
@@ -117,8 +117,45 @@ def recarregar_notifi():
         except:
             print('Notificação inexistente.')    
 
-schedule.every(30).seconds.do(recarregar_notifi)            
+schedule.every(15).seconds.do(recarregar_notifi)            
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Botão de recolher os pontos pelas tarefas feitas e reiniciar todas as tarefas
+def encerrar_dia():
+    dia_atual = decidir_dia_atual()  
+    dados = j.carregar_rotina(dia_atual)
+    dados_pontos = j.carregar_pontos()
+        
+    pontos_salvar = 0    
+        
+    for nome_tarefa, info in dados.items():
+            info['checkbox'] = 2
+            pontos_salvar += info['pontos']
+            info['pontos'] = 0
+
+    dados_pontos['pontos'] += pontos_salvar
+        
+    j.salvar_rotina(dia_atual,dados)
+    j.salvar_pontos(pontos_salvar,dados_pontos)
+    
+    pontos_salvar = 0    
+        
+    conteudo_rotina.rotina_atual(conteudo_frame,janela)
+        
+        
+encerrar_dia_btn = ctk.CTkButton(
+    janela,
+    text="Encerrar Dia",
+    fg_color= 'firebrick',
+    hover_color='firebrick4',
+    width=20,
+    height=110,
+    command= encerrar_dia
+            )
+encerrar_dia_btn.place(x=875,y=255)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 loop_diario(janela)
-
 janela.mainloop()

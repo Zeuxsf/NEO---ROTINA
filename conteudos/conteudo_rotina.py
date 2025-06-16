@@ -585,37 +585,6 @@ def rotina_atual(janela, tela_principal):
     dados_pontos = j.carregar_pontos()
     
     dias(janela, tela_principal, dia_atual)
-          
-    #Botão de recolher os pontos pelas tarefas feitas e reiniciar todas as tarefas
-    def encerrar_dia():
-        
-        pontos_salvar = 0
-        
-        for nome_tarefa, info in dados.items():
-            info['checkbox'] = 2
-            pontos_salvar += info['pontos']
-            info['pontos'] = 0
-
-        dados_pontos['pontos'] += pontos_salvar
-        
-        j.salvar_rotina(dia_atual,dados)
-        j.salvar_pontos(pontos_salvar,dados_pontos)
-        
-        pontos_salvar = 0
-        
-        rotina_atual(janela,tela_principal)
-        
-        
-    encerrar_dia_btn = ctk.CTkButton(
-    janela,
-    text="Encerrar Dia",
-    fg_color= 'firebrick',
-    hover_color='firebrick4',
-    width=20,
-    height=110,
-    command= encerrar_dia
-            )
-    encerrar_dia_btn.place(x=742,y=255)
     
     loop_diario()
     

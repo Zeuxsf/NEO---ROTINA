@@ -4,6 +4,7 @@ import schedule
 import datetime
 import winotify
 
+
 # Área de cores:
 dark_ou_light = "dark"
 ctk.set_appearance_mode(dark_ou_light)
@@ -465,15 +466,6 @@ def adicionar_tarefa(
             horafim_text.place(x=270, y=155)
             horafim_text.configure(state="disabled")
         else:
-            if len(hora_inicio) > 2 or len(hora_inicio) < 2:
-                hora_inicio = 11
-            if len(min_inicio) > 2 or len(min_inicio) < 2:
-                min_inicio = 59
-            if len(hora_fim) > 2 or len(hora_fim) < 2:
-                hora_fim = 23
-            if len(min_fim) > 2 or len(min_fim) < 2:
-                min_fim = 59
-
             try:
                 hora_inicio = int(hora_inicio)
             except:
@@ -508,6 +500,16 @@ def adicionar_tarefa(
             min_inicio = str(min_inicio).zfill(2)
             hora_fim = str(hora_fim).zfill(2)
             min_fim = str(min_fim).zfill(2)
+            
+            if len(hora_inicio) > 2 or len(hora_inicio) < 2:
+                hora_inicio = 11
+            if len(min_inicio) > 2 or len(min_inicio) < 2:
+                min_inicio = 59
+            if len(hora_fim) > 2 or len(hora_fim) < 2:
+                hora_fim = 23
+            if len(min_fim) > 2 or len(min_fim) < 2:
+                min_fim = 59
+
             
             horainicio_text = ctk.CTkEntry(
                 tarefa_criada,
@@ -581,12 +583,48 @@ def rotina_atual(janela, tela_principal):
     
     dia_atual = decidir_dia_atual()
     
-    dados = j.carregar_rotina(dia_atual)
-    dados_pontos = j.carregar_pontos()
     
     dias(janela, tela_principal, dia_atual)
     
+    #Botão de recolher os pontos pelas tarefas feitas e reiniciar todas as tarefas
+    #Depois de alguns bugs, resolveu por um milagre divino kkkkkkkk
+    def encerrar_dia():
+            
+        dados = j.carregar_rotina(dia_atual)
+        dados_pontos = j.carregar_pontos()
+    
+        pontos_salvar = 0    
+            
+        for nome_tarefa, info in dados.items():
+                info['checkbox'] = 2
+                pontos_salvar += info['pontos']
+                info['pontos'] = 0
+
+        dados_pontos['pontos'] += pontos_salvar
+            
+        j.salvar_rotina(dia_atual,dados)
+        j.salvar_pontos(pontos_salvar,dados_pontos)
+        
+        pontos_salvar = 0    
+            
+        rotina_atual(janela,tela_principal)
+            
+            
+    encerrar_dia_btn = ctk.CTkButton(
+        janela,
+        text="Encerrar Dia",
+        fg_color= 'firebrick',
+        hover_color='firebrick4',
+        width=20,
+        height=110,
+        command= encerrar_dia
+                )
+    encerrar_dia_btn.place(x=742,y=255)
+    
     loop_diario()
+    
+    frame_aleatório = ctk.CTkFrame(janela,width=100,height=100)
+    frame_aleatório.pack()
     
     
 def rotinas(janela, tela_principal):

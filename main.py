@@ -10,12 +10,18 @@ import winotify
 import schedule
 import json
 import salvar_carregar as j
+from unidecode import unidecode
+import string
 
 
 
-agora = datetime.datetime.now()
-hora = agora.strftime("%H:%M")
-print(agora, hora)
+hoje = datetime.datetime.now()
+
+ontem = hoje - datetime.timedelta(days=1)
+ontem = ontem.strftime("%A")
+
+hora = hoje.strftime("%H:%M")
+
 
 
 #Área de cores:
@@ -100,60 +106,39 @@ def loop_diario(tela_principal):
 
 
 def recarregar_notifi():
+    
     dia_atual = decidir_dia_atual()    
     dados = j.carregar_rotina(dia_atual)
+    dados_de_ontem = j.carregar_rotina(ontem)
+    
+    remove_caracter_especial = str.maketrans('','',string.punctuation)
+    
+    #Aproveitando a atualização dos dados pra poder excluir as tarefas temporarias do dia anterior, sempre checando caso o usuário use o programa aberto direto, sem fechar
+    for tarefa, info in list(dados_de_ontem.items()):
+        if tarefa in dados_de_ontem:
+            if info['tempo'] == 1:
+                dados_de_ontem = j.carregar_rotina(ontem)
+                del dados_de_ontem[tarefa]
+                j.salvar_rotina(ontem, dados_de_ontem)
             
     for tarefa, info in list(dados.items()):
         try:
+            
+            hora_sistema = unidecode(hora).strip().lower().translate(remove_caracter_especial).replace(" ","")
+            hora_salva_json = unidecode(info['hora_fim']).strip().lower().translate(remove_caracter_especial).replace(" ","")
                     
             schedule.every().day.at(info['hora_inicio']).do(lambda t= tarefa, i= info['desc']: notificar(f'Começando: {t}',i))    
             schedule.every().day.at(info['hora_fim']).do(lambda t= tarefa, i= info['desc']: notificar(f'Terminando: {t}',i))
             if info['tempo'] == 1 :
-                if hora > info['hora_fim']:
+                if int(hora_sistema) > int(hora_salva_json):
                     dados = j.carregar_rotina(dia_atual)
                     del dados[tarefa]
                     j.salvar_rotina(dia_atual, dados)
                   
-        except:
-            print('Notificação inexistente.')    
+        except Exception as e:
+            print('Notificação inexistente.',e)    
 
 schedule.every(15).seconds.do(recarregar_notifi)            
-
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-#Botão de recolher os pontos pelas tarefas feitas e reiniciar todas as tarefas
-def encerrar_dia():
-    dia_atual = decidir_dia_atual()  
-    dados = j.carregar_rotina(dia_atual)
-    dados_pontos = j.carregar_pontos()
-        
-    pontos_salvar = 0    
-        
-    for nome_tarefa, info in dados.items():
-            info['checkbox'] = 2
-            pontos_salvar += info['pontos']
-            info['pontos'] = 0
-
-    dados_pontos['pontos'] += pontos_salvar
-        
-    j.salvar_rotina(dia_atual,dados)
-    j.salvar_pontos(pontos_salvar,dados_pontos)
-    
-    pontos_salvar = 0    
-        
-    conteudo_rotina.rotina_atual(conteudo_frame,janela)
-        
-        
-encerrar_dia_btn = ctk.CTkButton(
-    janela,
-    text="Encerrar Dia",
-    fg_color= 'firebrick',
-    hover_color='firebrick4',
-    width=20,
-    height=110,
-    command= encerrar_dia
-            )
-encerrar_dia_btn.place(x=875,y=255)
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

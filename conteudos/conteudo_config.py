@@ -6,6 +6,6 @@ def config(jnl,tela_principal):
     widget.destroy()
 
  tela_principal.geometry('1000x650')    
- title = ctk.CTkLabel(jnl,text='CONFIGURAÇÕES',font=('Cascadia Code', 20))
+ title = ctk.CTkLabel(jnl,text='EM OBRA',font = ('',120))
  title.pack()
    

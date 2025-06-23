@@ -1,1 +1,11 @@
-{}
+{
+    "tarefa_sem_nome": {
+        "desc": "Descrição da Tarefa...\n",
+        "hora_inicio": "11:59",
+        "hora_fim": "23:59",
+        "dia": "Sunday",
+        "tempo": 1,
+        "checkbox": 0,
+        "pontos": 0
+    }
+}

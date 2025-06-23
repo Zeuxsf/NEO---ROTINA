@@ -107,7 +107,7 @@ def dias(janela, tela_principal, mostrar=False):
 
     def segunda():
         if 'Monday' in mostrar:
-            segunda_frame = ctk.CTkScrollableFrame(janela, 820, 651)
+            segunda_frame = ctk.CTkScrollableFrame(janela, 820, 610)
             segunda_frame.pack(pady=5)
 
             title = ctk.CTkLabel(segunda_frame, text="Segunda", font=("", 35))
@@ -127,7 +127,7 @@ def dias(janela, tela_principal, mostrar=False):
 
     def terça():
         if 'Tuesday' in mostrar:
-            terça_frame = ctk.CTkScrollableFrame(janela, 820, 651)
+            terça_frame = ctk.CTkScrollableFrame(janela, 820, 610)
             terça_frame.pack(pady=5)
 
             title = ctk.CTkLabel(terça_frame, text="Terça", font=("", 35))
@@ -147,7 +147,7 @@ def dias(janela, tela_principal, mostrar=False):
 
     def quarta():
         if "Wednesday" in mostrar:
-            quarta_frame = ctk.CTkScrollableFrame(janela, 820, 651)
+            quarta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
             quarta_frame.pack(pady=5)
 
             title = ctk.CTkLabel(quarta_frame, text="Quarta", font=("", 35))
@@ -167,7 +167,7 @@ def dias(janela, tela_principal, mostrar=False):
 
     def quinta():
         if "Thursday" in mostrar:
-            quinta_frame = ctk.CTkScrollableFrame(janela, 820, 651)
+            quinta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
             quinta_frame.pack(pady=5)
             
 
@@ -188,7 +188,7 @@ def dias(janela, tela_principal, mostrar=False):
 
     def sexta():
         if "Friday" in mostrar:
-            sexta_frame = ctk.CTkScrollableFrame(janela, 820, 651)
+            sexta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
             sexta_frame.pack(pady=5)
 
 
@@ -209,7 +209,7 @@ def dias(janela, tela_principal, mostrar=False):
 
     def sabado():
         if "Saturday" in mostrar:
-            sabado_frame = ctk.CTkScrollableFrame(janela, 820, 651)
+            sabado_frame = ctk.CTkScrollableFrame(janela, 820, 610)
             sabado_frame.pack(pady=5)
 
             title = ctk.CTkLabel(sabado_frame, text="Sábado", font=("", 35))
@@ -229,7 +229,7 @@ def dias(janela, tela_principal, mostrar=False):
 
     def domingo():
         if "Sunday" in mostrar:
-            domingo_frame = ctk.CTkScrollableFrame(janela, 820, 651)
+            domingo_frame = ctk.CTkScrollableFrame(janela, 820, 610)
             domingo_frame.pack(pady=5)
             
 
@@ -316,7 +316,7 @@ def adicionar_tarefa(
             tela_principal.geometry("1250x650")
 
             tarefatela = ctk.CTkFrame(
-                tela_principal, 245, 635, border_color=cor_principal, border_width=1
+                tela_principal, 245, 610, border_color=cor_principal, border_width=1
             )
             tarefatela.place(x=1000, y=10)
 

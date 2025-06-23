@@ -6,5 +6,5 @@ def info(jnl,tela_principal):
     widget.destroy()
 
  tela_principal.geometry('1000x650')    
- title = ctk.CTkLabel(jnl,text='TESTE')
+ title = ctk.CTkLabel(jnl,text='EM OBRA',font = ('',120))
  title.pack()    

@@ -1,11 +1,89 @@
 import customtkinter as ctk
+import sys
+import os
+from winotify import Notification
+
+def notificar(titulo, mensagem):
+   notificação = Notification(app_id='NeoTrax', title=titulo, msg=mensagem)
+   notificação.show()
+
+def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_principal, pomodoro_frame):
+  
+   segundos = minutos * 60
+   pausado = False
+         
+   descanso_btn.place_forget()
+   iniciar_btn.place_forget()
+   
+   def atualizar(taxa_de_atualização=1):
+      
+    nonlocal segundos
+    
+    if pausado:
+       return
+    
+    try:
+         if segundos >= 0:      
+            mins = segundos // 60
+            segs = segundos % 60  
+            cronometro.configure(text=f'{mins:02d}:{segs:02d}')
+            segundos -= taxa_de_atualização
+            tela_principal.after(1000,atualizar)
+         else:
+            iniciar_btn.place(x=340,y=380)
+            descanso_btn.place(x=430,y=380)
+            pause_btn.destroy()       
+            
+         if segundos == 0:
+            iniciar_btn.place(x=340,y=380)
+            descanso_btn.place(x=430,y=380)
+            pause_btn.destroy() 
+            
+            if identificador == 0:
+              notificar('Temporizador Zerado!', 'Hora de ter uma PAUSA!')
+            
+            else: 
+               notificar('Temporizador Zerado!', 'Hora de voltar pra AÇÃO!')
+    except:
+         print('Contador Zerado')               
+   
+   def pause():
+      nonlocal pausado
+      pausado = not pausado
+      troca_texto = 'Continuar' if pausado else 'Pausar'
+         
+      pause_btn.configure(text = troca_texto)
+      
+      if not pausado:
+       atualizar()
+                  
+   pause_btn = ctk.CTkButton(pomodoro_frame,50,50,text='Pausar', text_color='white', command=pause)
+   pause_btn.place(x=380,y=380)      
+
+   atualizar()
+   
+                              
+            
+   
 
 def pomodoro(jnl,tela_principal):
  for widget in jnl.winfo_children():
     widget.destroy()
 
  tela_principal.geometry('1000x650')    
- title = ctk.CTkLabel(jnl,text='TESTE')
- title.pack()    
+ 
+ pomodoro_frame = ctk.CTkFrame(jnl,835,620)
+ pomodoro_frame.pack()
+
+ cronometro = ctk.CTkLabel(pomodoro_frame,20,20,text='00:00',text_color='white',font=('Franklin Gothic',110))
+ cronometro.place(x=298,y=98)
+ 
+ iniciar_btn = ctk.CTkButton(pomodoro_frame,50,50,text='Começar', text_color='white', command= lambda: iniciar(25, 0,iniciar_btn,descanso_btn,cronometro, tela_principal, pomodoro_frame) )
+ iniciar_btn.place(x=340,y=380)
+
+ descanso_btn = ctk.CTkButton(pomodoro_frame,50,50,text='Descansar', text_color='white', command= lambda: iniciar(1, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, pomodoro_frame) )
+ descanso_btn.place(x=430,y=380)
+ 
+ 
 
 

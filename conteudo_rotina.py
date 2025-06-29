@@ -1,25 +1,172 @@
 import customtkinter as ctk
-import salvar_carregar as j
+import ntx_database as db
 import schedule
 import datetime
-import winotify
-
-
-# Área de cores:
-dark_ou_light = "dark"
-ctk.set_appearance_mode(dark_ou_light)
-if dark_ou_light == "dark":
-    cor_principal = "dodgerblue"
-else:
-    cor_principal = "red"
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Sistema de frames para cada dia da semana, para auxiliar na organização
+def dias(janela, tela_principal, mostrar=False):
+
+    def segunda():
+        if 'Monday' in mostrar:
+            segunda_frame = ctk.CTkScrollableFrame(janela, 820, 610)
+            segunda_frame.pack(pady=5)
+
+            title = ctk.CTkLabel(segunda_frame, text="Segunda", font=("", 35))
+            title.pack(pady=15)
+
+            add_tarefa_btn = ctk.CTkButton(
+                segunda_frame,
+                text="+",
+                fg_color='dodgerblue',
+                width=20,
+                height=20,
+                command=lambda: criador_de_tarefas(segunda_frame, tela_principal,'Monday'),
+            )
+            add_tarefa_btn.place(x=490, y=30)
+            
+            iniciar_tela_rotina(segunda_frame,tela_principal,'Monday')
+
+    def terça():
+        if 'Tuesday' in mostrar:
+            terça_frame = ctk.CTkScrollableFrame(janela, 820, 610)
+            terça_frame.pack(pady=5)
+
+            title = ctk.CTkLabel(terça_frame, text="Terça", font=("", 35))
+            title.pack(pady=15)
+
+            add_tarefa_btn = ctk.CTkButton(
+                terça_frame,
+                text="+",
+                fg_color='dodgerblue',
+                width=20,
+                height=20,
+                command=lambda: criador_de_tarefas(terça_frame, tela_principal,'Tuesday'),
+            )
+            add_tarefa_btn.place(x=490, y=30)
+            
+            iniciar_tela_rotina(terça_frame,tela_principal,'Tuesday')
+
+    def quarta():
+        if "Wednesday" in mostrar:
+            quarta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
+            quarta_frame.pack(pady=5)
+
+            title = ctk.CTkLabel(quarta_frame, text="Quarta", font=("", 35))
+            title.pack(pady=15)
+
+            add_tarefa_btn = ctk.CTkButton(
+                quarta_frame,
+                text="+",
+                fg_color='dodgerblue',
+                width=20,
+                height=20,
+                command=lambda: criador_de_tarefas(quarta_frame, tela_principal,'Wednesday'),
+            )
+            add_tarefa_btn.place(x=490, y=30)
+            
+            iniciar_tela_rotina(quarta_frame,tela_principal,'Wednesday')
+
+    def quinta():
+        if "Thursday" in mostrar:
+            quinta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
+            quinta_frame.pack(pady=5)
+            
+
+            title = ctk.CTkLabel(quinta_frame, text="Quinta", font=("", 35))
+            title.pack(pady=15)
+
+            add_tarefa_btn = ctk.CTkButton(
+                quinta_frame,
+                text="+",
+                fg_color='dodgerblue',
+                width=20,
+                height=20,
+                command=lambda: criador_de_tarefas(quinta_frame, tela_principal,'Thursday'),
+            )
+            add_tarefa_btn.place(x=490, y=30)
+            
+            iniciar_tela_rotina(quinta_frame,tela_principal,'Thursday')            
+
+    def sexta():
+        if "Friday" in mostrar:
+            sexta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
+            sexta_frame.pack(pady=5)
+
+
+            title = ctk.CTkLabel(sexta_frame, text="Sexta", font=("", 35))
+            title.pack(pady=15)
+
+            add_tarefa_btn = ctk.CTkButton(
+                sexta_frame,
+                text="+",
+                fg_color='dodgerblue',
+                width=20,
+                height=20,
+                command=lambda: criador_de_tarefas(sexta_frame, tela_principal,'Friday'),
+            )
+            add_tarefa_btn.place(x=490, y=30)
+            
+            iniciar_tela_rotina(sexta_frame,tela_principal,'Friday')            
+
+    def sabado():
+        if "Saturday" in mostrar:
+            sabado_frame = ctk.CTkScrollableFrame(janela, 820, 610)
+            sabado_frame.pack(pady=5)
+
+            title = ctk.CTkLabel(sabado_frame, text="Sábado", font=("", 35))
+            title.pack(pady=15)
+
+            add_tarefa_btn = ctk.CTkButton(
+                sabado_frame,
+                text="+",
+                fg_color='dodgerblue',
+                width=20,
+                height=20,
+                command=lambda: criador_de_tarefas(sabado_frame, tela_principal,'Saturday'),
+            )
+            add_tarefa_btn.place(x=490, y=30)
+            
+            iniciar_tela_rotina(sabado_frame,tela_principal,'Saturday')            
+
+    def domingo():
+        if "Sunday" in mostrar:
+            domingo_frame = ctk.CTkScrollableFrame(janela, 820, 610)
+            domingo_frame.pack(pady=5)
+            
+
+            title = ctk.CTkLabel(domingo_frame, text="Domingo", font=("", 35))
+            title.pack(pady=15)
+
+            add_tarefa_btn = ctk.CTkButton(
+                domingo_frame,
+                text="+",
+                fg_color='dodgerblue',
+                width=20,
+                height=20,
+                command=lambda: criador_de_tarefas(domingo_frame, tela_principal,'Sunday'),
+            )
+            add_tarefa_btn.place(x=490, y=30)
+            
+            iniciar_tela_rotina(domingo_frame,tela_principal,'Sunday')            
+
+    segunda()
+    terça()
+    quarta()
+    quinta()
+    sexta()
+    sabado()
+    domingo()
+
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Aba em que o usuário vai preencher as informações da tarefa
 def criador_de_tarefas(frame_dia, tela_principal,dia):
 
     tela_principal.geometry("1250x650")
 
     tarefatela = ctk.CTkFrame(
-        tela_principal, 245, 635, border_color=cor_principal, border_width=1
+        tela_principal, 245, 635, border_color='dodgerblue', border_width=1
     )
     tarefatela.place(x=1000, y=10)
 
@@ -61,7 +208,7 @@ def criador_de_tarefas(frame_dia, tela_principal,dia):
     salvar_btn = ctk.CTkButton(
         tarefatela,
         text="SALVAR",
-        fg_color=cor_principal,
+        fg_color='dodgerblue',
         width=225,
         height=25,
         command=lambda: adicionar_tarefa(
@@ -80,183 +227,27 @@ def criador_de_tarefas(frame_dia, tela_principal,dia):
     salvar_btn.place(x=10, y=600)
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#Carregador de tarefas
+#Carregador de tarefas: vai carregar as informações salvas no banco de dados pra função que adiciona a tarefa na tela 
 def iniciar_tela_rotina(frame_dia,tela_principal,dia):
-    dados = j.carregar_rotina(dia)
+    dados = db.carregar_rotina(dia)
     
-    for nome_tarefa, info in dados.items():
-        if info['dia'] == dia:
+    for linha in dados:
+        if linha[3] == dia:
             adicionar_tarefa(frame_dia=frame_dia,
-                         nome_da_tarefa=nome_tarefa,
-                         desc_da_tarefa=info['desc'],
-                         temp_ou_fix=info['tempo'],
-                         hora_inicio=info['hora_inicio'],
-                         hora_fim=info['hora_fim'],
-                         dia_semana=info['dia'],
-                         check_state = info['checkbox'],
+                         nome_da_tarefa=linha[1],
+                         desc_da_tarefa=linha[2],
+                         temp_ou_fix=linha[6],
+                         hora_inicio=linha[4],
+                         hora_fim=linha[5],
+                         dia_semana=linha[3],
+                         check_state = linha[7],
                          tela_principal=tela_principal,
                          carregando = True
                          )
-        
-        
 
-
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Sistema de frames para cada dia da semana, para auxiliar na organização
-def dias(janela, tela_principal, mostrar=False):
-
-    def segunda():
-        if 'Monday' in mostrar:
-            segunda_frame = ctk.CTkScrollableFrame(janela, 820, 610)
-            segunda_frame.pack(pady=5)
-
-            title = ctk.CTkLabel(segunda_frame, text="Segunda", font=("", 35))
-            title.pack(pady=15)
-
-            add_tarefa_btn = ctk.CTkButton(
-                segunda_frame,
-                text="+",
-                fg_color=cor_principal,
-                width=20,
-                height=20,
-                command=lambda: criador_de_tarefas(segunda_frame, tela_principal,'Monday'),
-            )
-            add_tarefa_btn.place(x=490, y=30)
-            
-            iniciar_tela_rotina(segunda_frame,tela_principal,'Monday')
-
-    def terça():
-        if 'Tuesday' in mostrar:
-            terça_frame = ctk.CTkScrollableFrame(janela, 820, 610)
-            terça_frame.pack(pady=5)
-
-            title = ctk.CTkLabel(terça_frame, text="Terça", font=("", 35))
-            title.pack(pady=15)
-
-            add_tarefa_btn = ctk.CTkButton(
-                terça_frame,
-                text="+",
-                fg_color=cor_principal,
-                width=20,
-                height=20,
-                command=lambda: criador_de_tarefas(terça_frame, tela_principal,'Tuesday'),
-            )
-            add_tarefa_btn.place(x=490, y=30)
-            
-            iniciar_tela_rotina(terça_frame,tela_principal,'Tuesday')
-
-    def quarta():
-        if "Wednesday" in mostrar:
-            quarta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
-            quarta_frame.pack(pady=5)
-
-            title = ctk.CTkLabel(quarta_frame, text="Quarta", font=("", 35))
-            title.pack(pady=15)
-
-            add_tarefa_btn = ctk.CTkButton(
-                quarta_frame,
-                text="+",
-                fg_color=cor_principal,
-                width=20,
-                height=20,
-                command=lambda: criador_de_tarefas(quarta_frame, tela_principal,'Wednesday'),
-            )
-            add_tarefa_btn.place(x=490, y=30)
-            
-            iniciar_tela_rotina(quarta_frame,tela_principal,'Wednesday')
-
-    def quinta():
-        if "Thursday" in mostrar:
-            quinta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
-            quinta_frame.pack(pady=5)
-            
-
-            title = ctk.CTkLabel(quinta_frame, text="Quinta", font=("", 35))
-            title.pack(pady=15)
-
-            add_tarefa_btn = ctk.CTkButton(
-                quinta_frame,
-                text="+",
-                fg_color=cor_principal,
-                width=20,
-                height=20,
-                command=lambda: criador_de_tarefas(quinta_frame, tela_principal,'Thursday'),
-            )
-            add_tarefa_btn.place(x=490, y=30)
-            
-            iniciar_tela_rotina(quinta_frame,tela_principal,'Thursday')            
-
-    def sexta():
-        if "Friday" in mostrar:
-            sexta_frame = ctk.CTkScrollableFrame(janela, 820, 610)
-            sexta_frame.pack(pady=5)
-
-
-            title = ctk.CTkLabel(sexta_frame, text="Sexta", font=("", 35))
-            title.pack(pady=15)
-
-            add_tarefa_btn = ctk.CTkButton(
-                sexta_frame,
-                text="+",
-                fg_color=cor_principal,
-                width=20,
-                height=20,
-                command=lambda: criador_de_tarefas(sexta_frame, tela_principal,'Friday'),
-            )
-            add_tarefa_btn.place(x=490, y=30)
-            
-            iniciar_tela_rotina(sexta_frame,tela_principal,'Friday')            
-
-    def sabado():
-        if "Saturday" in mostrar:
-            sabado_frame = ctk.CTkScrollableFrame(janela, 820, 610)
-            sabado_frame.pack(pady=5)
-
-            title = ctk.CTkLabel(sabado_frame, text="Sábado", font=("", 35))
-            title.pack(pady=15)
-
-            add_tarefa_btn = ctk.CTkButton(
-                sabado_frame,
-                text="+",
-                fg_color=cor_principal,
-                width=20,
-                height=20,
-                command=lambda: criador_de_tarefas(sabado_frame, tela_principal,'Saturday'),
-            )
-            add_tarefa_btn.place(x=490, y=30)
-            
-            iniciar_tela_rotina(sabado_frame,tela_principal,'Saturday')            
-
-    def domingo():
-        if "Sunday" in mostrar:
-            domingo_frame = ctk.CTkScrollableFrame(janela, 820, 610)
-            domingo_frame.pack(pady=5)
-            
-
-            title = ctk.CTkLabel(domingo_frame, text="Domingo", font=("", 35))
-            title.pack(pady=15)
-
-            add_tarefa_btn = ctk.CTkButton(
-                domingo_frame,
-                text="+",
-                fg_color=cor_principal,
-                width=20,
-                height=20,
-                command=lambda: criador_de_tarefas(domingo_frame, tela_principal,'Sunday'),
-            )
-            add_tarefa_btn.place(x=490, y=30)
-            
-            iniciar_tela_rotina(domingo_frame,tela_principal,'Sunday')            
-
-    segunda()
-    terça()
-    quarta()
-    quinta()
-    sexta()
-    sabado()
-    domingo()
-
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------        
+#Vai adicionar a tarefa na tela
+#(o parâmetro "carregando" vai indicar se as informações vem das informaçôes de dentro do banco de dados ou do criador de tarefas, pro programa entender oq ele está fazendo)    
 def adicionar_tarefa(
     frame_dia,
     tela_principal,
@@ -268,11 +259,10 @@ def adicionar_tarefa(
     hora_fim=23,
     min_fim=59,
     dia_semana = '',
-    check_state = 0,
+    check_state = 2,
     carregando = False
 ):
-
-
+ 
     try:
         
       #Título e criação do frame que vai acomodar as infs
@@ -281,8 +271,6 @@ def adicionar_tarefa(
         )
         tarefa_criada.pack(pady=7)
         
-        dados = j.carregar_rotina(dia_semana)
-        
         if nome_da_tarefa == '':
             nome_da_tarefa = 'tarefa_sem_nome'
             
@@ -290,7 +278,7 @@ def adicionar_tarefa(
         title = ctk.CTkEntry(
             tarefa_criada,
             placeholder_text=nome_da_tarefa,
-            placeholder_text_color=cor_principal,
+            placeholder_text_color='dodgerblue',
             width=500,
             font=("", 20),
         )
@@ -300,7 +288,7 @@ def adicionar_tarefa(
 
          #Descrição
         desc = ctk.CTkTextbox(
-            tarefa_criada, text_color=cor_principal, width=500, height=100
+            tarefa_criada, text_color='dodgerblue', width=500, height=100
         )
         desc.insert("0.0", desc_da_tarefa)
         desc.place(x=10, y=45)
@@ -308,55 +296,39 @@ def adicionar_tarefa(
 
         # Botão de editar
         def editar_taf(tela_principal,
-                       nome_antigo,
-                       hora_inicio,min_inicio,
-                       hora_fim,min_fim,
-                       dia_semana,
-                       temp_ou_fix):
+                       dia_semana):
             tela_principal.geometry("1250x650")
 
             tarefatela = ctk.CTkFrame(
-                tela_principal, 245, 610, border_color=cor_principal, border_width=1
+                tela_principal, 245, 635, border_color='dodgerblue', border_width=1
             )
             tarefatela.place(x=1000, y=10)
 
-            nome_da_tarefa = ctk.CTkEntry(
+            nome_novo_da_tarefa = ctk.CTkEntry(
                 tarefatela, 225, 25, placeholder_text="Título da Tarefa..."
             )
-            nome_da_tarefa.place(x=10, y=7)
+            nome_novo_da_tarefa.place(x=10, y=7)
 
-            desc_da_tarefa = ctk.CTkTextbox(tarefatela, 225, 200)
-            desc_da_tarefa.place(x=10, y=39)
-            desc_da_tarefa.insert(index="0.0", text="Descrição da Tarefa...")
+            desc_nova_da_tarefa = ctk.CTkTextbox(tarefatela, 225, 200)
+            desc_nova_da_tarefa.place(x=10, y=39)
+            desc_nova_da_tarefa.insert(index="0.0", text="Descrição da Tarefa...")
 
-            def editar_tarefa():
-                nonlocal nome_antigo
+            def update_linha():
 
                 tela_principal.geometry("1000x650")
 
-                dados = j.carregar_rotina(dia_semana)
+                id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
+                
+                db.editar_linha(id_linha,nome_novo_da_tarefa.get(),desc_nova_da_tarefa.get("1.0","end"))
 
-                del dados[nome_antigo]
-
-                dados[nome_da_tarefa.get()] = {
-                    "desc": desc_da_tarefa.get('1.0','end'),
-                    "hora_inicio": f"{hora_inicio}:{min_inicio}",
-                    "hora_fim": f"{hora_fim}:{min_fim}",
-                    "dia": dia_semana,
-                    "tempo": temp_ou_fix,
-                    "checkbox": estado_checkbox.get()
-                    
-                }
-
-                j.salvar_rotina(dia_semana, dados)
 
                 return (
                     title.configure(state="normal"),
-                    title.configure(placeholder_text=nome_da_tarefa.get()),
+                    title.configure(placeholder_text=nome_novo_da_tarefa.get()),
                     title.configure(state="disabled"),
                     desc.configure(state="normal"),
                     desc.delete("1.0", "end"),
-                    desc.insert(index="0.0", text=desc_da_tarefa.get("1.0", "end")),
+                    desc.insert(index="0.0", text=desc_nova_da_tarefa.get("1.0", "end")),
                     desc.configure(state="disabled"),
                     excluir_btn.configure(state= 'disabled'),
                     edit_btn.configure(state='disabled'),
@@ -366,10 +338,10 @@ def adicionar_tarefa(
             salvar_btn = ctk.CTkButton(
                 tarefatela,
                 text="EDITAR",
-                fg_color=cor_principal,
+                fg_color='dodgerblue',
                 width=225,
                 height=25,
-                command=editar_tarefa,
+                command=update_linha,
             )
             salvar_btn.place(x=10, y=600)
 
@@ -378,7 +350,7 @@ def adicionar_tarefa(
             text="EDITAR",
             width=50,
             height=50,
-            command=lambda: editar_taf(tela_principal, nome_da_tarefa,hora_inicio,min_inicio,hora_fim,min_fim,dia_semana,temp_ou_fix),
+            command=lambda: editar_taf(tela_principal,dia_semana),
         )
         edit_btn.place(x=525, y=55)
 
@@ -386,7 +358,7 @@ def adicionar_tarefa(
         if temp_ou_fix == 1:
             tarefa_criada.configure(border_color="yellow")
         elif temp_ou_fix == 2:
-            tarefa_criada.configure(border_color=cor_principal)
+            tarefa_criada.configure(border_color='dodgerblue')
         else:
             temp_ou_fix = 3
 
@@ -398,15 +370,23 @@ def adicionar_tarefa(
             return day
         
         def chechagem():
-            dados = j.carregar_rotina(dia_semana)
-                
-            dados[nome_da_tarefa]['checkbox'] = estado_checkbox.get()
-            if estado_checkbox.get() == 1:
-                dados[nome_da_tarefa]['pontos'] += 1
-            else:
-                dados[nome_da_tarefa]['pontos'] -= 1    
+            id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
             
-            j.salvar_rotina(dia_semana,dados)   
+            if estado_checkbox.get() == 1:
+                db.cursor.execute('''UPDATE trax SET pontos = pontos + 1
+                                      WHERE id = ?''',(id_linha,))
+                
+                db.cursor.execute('''UPDATE trax SET checkbox = 1
+                                  WHERE id = ?''', (id_linha,))
+                
+            if estado_checkbox.get() == 2:
+                db.cursor.execute('''UPDATE trax SET pontos = pontos - 1
+                                  WHERE id = ?''', (id_linha,))
+                
+                db.cursor.execute('''UPDATE trax SET checkbox = 2
+                                  WHERE id = ?''', (id_linha,))
+                     
+            db.conexao.commit()
           
         check = ctk.CTkCheckBox(
             tarefa_criada,
@@ -414,7 +394,7 @@ def adicionar_tarefa(
             width=35,
             checkbox_width=35,
             checkbox_height=35,
-            fg_color=cor_principal,
+            fg_color='dodgerblue',
             checkmark_color="green2",
             variable=estado_checkbox,
             onvalue=1,
@@ -427,24 +407,19 @@ def adicionar_tarefa(
         
         if dia_atual != dia_semana:
             check.configure(state = 'disabled')
-            
-    
 
         # Botão de excluir
         def excluir_taf():
             tarefa_criada.destroy()
-            dados = j.carregar_rotina(dia_semana)
-
-            del dados[nome_da_tarefa]
-
-            j.salvar_rotina(dia_semana, dados)
+            id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
+            db.excluir_linha(id_linha)
         
         excluir_btn = ctk.CTkButton(
             tarefa_criada, text="EXCLUIR", width=50, height=50, command=excluir_taf
         )
         excluir_btn.place(x=525, y=110)
 
-        # Horario
+        # Tratamento de horário para salvar no banco de dados sem erros e no formato correto para funcionar na função notificadora
         if carregando == True:
             horainicio_text = ctk.CTkEntry(
             tarefa_criada,
@@ -531,39 +506,17 @@ def adicionar_tarefa(
             horafim_text.place(x=270, y=155)
             horafim_text.configure(state="disabled")
 
-#Salvar no arquivo
+#Salva as informações no banco de dados caso não esteja apenas carregando as informações existentes
         tela_principal.geometry("1000x650")
-        
-
-        dados = j.carregar_rotina(dia_semana)
-        if carregando == True:
-            dados[nome_da_tarefa] = {
-            "desc": desc_da_tarefa,
-            "hora_inicio": f"{hora_inicio}",
-            "hora_fim": f"{hora_fim}",
-            "dia": dia_semana,
-            "tempo": temp_ou_fix,
-            "checkbox": estado_checkbox.get(),
-            "pontos": 0
-            }
-        else:    
-            dados[nome_da_tarefa] = {
-                "desc": desc_da_tarefa,
-                "hora_inicio": f"{hora_inicio}:{min_inicio}",
-                "hora_fim": f"{hora_fim}:{min_fim}",
-                "dia": dia_semana,
-                "tempo": temp_ou_fix,
-                "checkbox": estado_checkbox.get(),
-                "pontos": 0
-                }
-
-        j.salvar_rotina(dia_semana, dados)
-        
-    except:
+        if carregando == False:
+            db.adicionar_linha(nome_da_tarefa,desc_da_tarefa,dia_semana,f'{hora_inicio}:{min_inicio}',f'{hora_fim}:{min_fim}',temp_ou_fix)
+    except Exception as e:
         tela_principal.geometry("1000x650")
-
+        print(e)
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Uma aba dedicada para as tarefas do dia atual, a rotina diária
 def rotina_atual(janela, tela_principal):
     for widget in janela.winfo_children():
         widget.destroy()
@@ -586,27 +539,15 @@ def rotina_atual(janela, tela_principal):
     
     dias(janela, tela_principal, dia_atual)
     
-    #Botão de recolher os pontos pelas tarefas feitas e reiniciar todas as tarefas
-    #Depois de alguns bugs, resolveu por um milagre divino kkkkkkkk
+    #Vai desmarcar todas as checkboxs do dia atual e salvar os pontos, possibilitando uma "gamificação" das tarefas
     def encerrar_dia():
+   
+        dados = db.carregar_rotina(dia_atual)
             
-        dados = j.carregar_rotina(dia_atual)
-        dados_pontos = j.carregar_pontos()
-    
-        pontos_salvar = 0    
-            
-        for nome_tarefa, info in dados.items():
-                info['checkbox'] = 2
-                pontos_salvar += info['pontos']
-                info['pontos'] = 0
+        for linha in dados:
+                db.cursor.execute('''UPDATE trax SET checkbox = 2 WHERE dia = ?''', (dia_atual,))
+                db.conexao.commit()
 
-        dados_pontos['pontos'] += pontos_salvar
-            
-        j.salvar_rotina(dia_atual,dados)
-        j.salvar_pontos(pontos_salvar,dados_pontos)
-        
-        pontos_salvar = 0    
-            
         rotina_atual(janela,tela_principal)
             
             
@@ -626,7 +567,7 @@ def rotina_atual(janela, tela_principal):
     frame_aleatório = ctk.CTkFrame(janela,width=100,height=100)
     frame_aleatório.pack()
     
-    
+#Vai mostrar todas as rotinas, todos os dias da semana, para o usuário poder organizar sua rotina semanal ou apenas visualizar    
 def rotinas(janela, tela_principal):
     for widget in janela.winfo_children():
         widget.destroy()

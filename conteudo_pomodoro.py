@@ -1,12 +1,13 @@
 import customtkinter as ctk
-import sys
-import os
 from winotify import Notification
 
+#Vai notificar o usuário quando a contagem acabar
 def notificar(titulo, mensagem):
    notificação = Notification(app_id='NeoTrax', title=titulo, msg=mensagem)
    notificação.show()
 
+#Vai iniciar a contagem
+#(o parâmetro "identificador" vai dizer se é o contador de estudo ou de descanso)
 def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_principal, pomodoro_frame):
   
    segundos = minutos * 60
@@ -47,6 +48,7 @@ def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_
     except:
          print('Contador Zerado')               
    
+   #Função para pausar a contagem
    def pause():
       nonlocal pausado
       pausado = not pausado
@@ -61,11 +63,8 @@ def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_
    pause_btn.place(x=380,y=380)      
 
    atualizar()
-   
-                              
-            
-   
-
+         
+#É a aba que vai mostrar o pomodoro na tela
 def pomodoro(jnl,tela_principal):
  for widget in jnl.winfo_children():
     widget.destroy()
@@ -81,7 +80,7 @@ def pomodoro(jnl,tela_principal):
  iniciar_btn = ctk.CTkButton(pomodoro_frame,50,50,text='Começar', text_color='white', command= lambda: iniciar(25, 0,iniciar_btn,descanso_btn,cronometro, tela_principal, pomodoro_frame) )
  iniciar_btn.place(x=340,y=380)
 
- descanso_btn = ctk.CTkButton(pomodoro_frame,50,50,text='Descansar', text_color='white', command= lambda: iniciar(1, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, pomodoro_frame) )
+ descanso_btn = ctk.CTkButton(pomodoro_frame,50,50,text='Descansar', text_color='white', command= lambda: iniciar(10, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, pomodoro_frame) )
  descanso_btn.place(x=430,y=380)
  
  

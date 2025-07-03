@@ -34,7 +34,7 @@ def dias(janela, tela_principal, mostrar=False):
 
             title = ctk.CTkLabel(terça_frame, text="Terça", font=("", 35))
             title.pack(pady=15)
-
+            
             add_tarefa_btn = ctk.CTkButton(
                 terça_frame,
                 text="+",
@@ -221,7 +221,8 @@ def criador_de_tarefas(frame_dia, tela_principal,dia):
             min_inicio.get(),
             hora_fim.get(),
             min_fim.get(),
-            dia
+            dia,
+            tarefatela.destroy()
         ),
     )
     salvar_btn.place(x=10, y=600)
@@ -376,12 +377,18 @@ def adicionar_tarefa(
                 db.cursor.execute('''UPDATE trax SET pontos = pontos + 1
                                       WHERE id = ?''',(id_linha,))
                 
+                db.cursor.execute('''UPDATE trax SET pontos = pontos + 1
+                                      WHERE temporario = 1 AND id = ?''',(id_linha,))
+                
                 db.cursor.execute('''UPDATE trax SET checkbox = 1
                                   WHERE id = ?''', (id_linha,))
                 
             if estado_checkbox.get() == 2:
                 db.cursor.execute('''UPDATE trax SET pontos = pontos - 1
                                   WHERE id = ?''', (id_linha,))
+
+                db.cursor.execute('''UPDATE trax SET pontos = pontos - 1
+                                      WHERE temporario = 1 AND id = ?''',(id_linha,))
                 
                 db.cursor.execute('''UPDATE trax SET checkbox = 2
                                   WHERE id = ?''', (id_linha,))
@@ -507,7 +514,7 @@ def adicionar_tarefa(
             horafim_text.configure(state="disabled")
 
 #Salva as informações no banco de dados caso não esteja apenas carregando as informações existentes
-        tela_principal.geometry("1000x650")
+        tela_principal.geometry("1080x650")
         if carregando == False:
             db.adicionar_linha(nome_da_tarefa,desc_da_tarefa,dia_semana,f'{hora_inicio}:{min_inicio}',f'{hora_fim}:{min_fim}',temp_ou_fix)
     except Exception as e:
@@ -563,13 +570,40 @@ def rotina_atual(janela, tela_principal):
     encerrar_dia_btn.place(x=742,y=255)
     
     loop_diario()
-    
-    frame_aleatório = ctk.CTkFrame(janela,width=100,height=100)
-    frame_aleatório.pack()
-    
-#Vai mostrar todas as rotinas, todos os dias da semana, para o usuário poder organizar sua rotina semanal ou apenas visualizar    
-def rotinas(janela, tela_principal):
-    for widget in janela.winfo_children():
-        widget.destroy()
     tela_principal.geometry("1000x650")
-    dias(janela, tela_principal, "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday")
+    
+#Vai mostrar a rotina que o usuário escolher, tem acesso a todos os dias da semana, para o usuário poder organizar sua rotina semanal ou apenas visualizar    
+def rotinas(janela, tela_principal):
+    
+    def apagar():
+        for widget in janela.winfo_children():
+            widget.destroy()
+
+    apagar()
+    
+    tela_principal.geometry("1080x650")
+    
+    segunda_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Monday'))
+    segunda_btn.place(x=1000,y=10)
+        
+    terça_btn = ctk.CTkButton(tela_principal,70,70,text='T',command=lambda:dias(janela,tela_principal,'Tuesday'))
+    terça_btn.place(x=1000,y=90)
+        
+    quarta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Wednesday'))
+    quarta_btn.place(x=1000,y=170)    
+        
+    quinta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Thursday'))
+    quinta_btn.place(x=1000,y=250)
+        
+    sexta_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Friday'))
+    sexta_btn.place(x=1000,y=330)
+        
+    sabado_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Saturday'))
+    sabado_btn.place(x=1000,y=410)
+        
+    domingo_btn = ctk.CTkButton(tela_principal,70,70,text='D',command=lambda:dias(janela,tela_principal,'Sunday'))
+    domingo_btn.place(x=1000,y=490)
+    
+    delete_tudo_btn = ctk.CTkButton(tela_principal,70,70,text='Delete',command=lambda:apagar())
+    delete_tudo_btn.place(x=1000,y=570)
+              

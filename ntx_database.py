@@ -46,5 +46,15 @@ def carregar_rotina(dia):
     cursor.execute('''SELECT * FROM trax WHERE dia = ?''', (dia,))
     return cursor.fetchall()    
 
+def buscar_pontos_totais(dia):
+    cursor.execute('''SELECT SUM(pontos) FROM trax WHERE dia = ?''', (dia,))
+    pontos = cursor.fetchone()
+    try:
+        pontos = float(pontos[0])
+        pontos = pontos / 100
+    except:
+        pontos = 0.00  
+    return pontos
+
 def encerrar_conexao():
     conexao.close()

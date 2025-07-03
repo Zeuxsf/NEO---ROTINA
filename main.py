@@ -21,6 +21,9 @@ janela = ctk.CTk()
 janela.geometry('1000x650')
 janela.resizable(False,False)
 janela.title('NeoTrax')
+janela.iconbitmap('imagens/ntx_logo.ico')
+#ctk.set_appearance_mode('light')
+
 
 #Uma tela scrolável, pro programa ter liberdade de crescer
 conteudo_frame = ctk.CTkScrollableFrame(janela,844,670,fg_color='transparent')
@@ -60,7 +63,7 @@ rotinas_btn = ctk.CTkButton(aba,10,50,text='',image=rotinas_btn_image, fg_color=
 rotinas_btn.place(x=33,y=122)
 
 #Botão de Pontuação (Mostra a pontuação do usuário)
-pontos_btn = ctk.CTkButton(aba,10,50,text='',image=pontos_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pontuacao.pontuacao(conteudo_frame,janela),hover_color='dodgerblue')
+pontos_btn = ctk.CTkButton(aba,10,50,text='',image=pontos_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pontuacao.pontuacao(conteudo_frame,janela,hoje),hover_color='dodgerblue')
 pontos_btn.place(x=33,y=210)
 
 #Botão do Pomodoro pessoal
@@ -89,7 +92,7 @@ def recarregar_notifi():
     #Aproveitando o sistema de verificação das notificações para poder excluir as tarefas temporarias do dia anterior, sempre checando caso o usuário use o programa aberto direto, sem fechar
     for linha in dados:
         if ontem == linha[3]:
-            db.cursor.execute('''DELETE FROM trax WHERE temporario = ? dia = ?''',('1',ontem))
+            db.cursor.execute('''DELETE FROM trax WHERE temporario = ? AND dia = ?''',('1',ontem))
             db.conexao.commit()
             
     for linha in dados:

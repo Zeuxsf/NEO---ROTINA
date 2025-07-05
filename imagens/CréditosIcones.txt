@@ -1,0 +1,7 @@
+Pomodoro ícone = Fajrul Fitrianto
+Icone de gerenciador de rotinas = Smashicons
+ícone dia atual =  Kiranshastry
+pontos = Vectorslab
+config =  Freepik
+info = Freepik
+minimizar = pictranoosa

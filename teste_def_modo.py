@@ -1,21 +1,52 @@
-import customtkinter
+import customtkinter as ctk
+import tkinter as tk
+from pystray import Icon, MenuItem as item, Menu
+from PIL import Image
+import threading
 
-customtkinter.set_appearance_mode("System")  # Modos: "System", "Dark", "Light"
-customtkinter.set_default_color_theme("blue")  # Temas: "blue", "green", "dark-blue"
+# Funções do Tray
+def esconder_janela():
+    root.withdraw()
+    mostrar_tray()
 
-app = customtkinter.CTk()
-app.geometry("400x200")
+def mostrar_janela(icon=None, item=None):
+    root.deiconify()
+    tray.stop()
 
-def change_appearance_mode_event():
-    new_mode = mode_optionemenu.get()
-    customtkinter.set_appearance_mode(new_mode)
+def sair_do_programa(icon, item):
+    tray.stop()
+    root.destroy()
 
-mode_label = customtkinter.CTkLabel(app, text="Appearance Mode:")
-mode_label.pack(padx=20, pady=10)
+def mostrar_tray():
+    global tray
+    image = Image.open("imagens/ntx_logo.ico")  # Ícone 16x16 ou 32x32
+    menu = Menu(
+        item('Abrir NeoTrax', mostrar_janela),
+        item('Sair', sair_do_programa)
+    )
+    tray = Icon("NeoTrax", image, "Sua nova trilha!", menu)
+    threading.Thread(target=tray.run).start()
 
-mode_optionemenu = customtkinter.CTkOptionMenu(app, values=["Light", "Dark", "System"],
-                                                command=change_appearance_mode_event)
-mode_optionemenu.pack(padx=20, pady=10)
-mode_optionemenu.set("System")
+# Janela principal
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")  # Ou o teu tema customizado
+root = ctk.CTk()
+root.geometry("400x300")
+root.title("NeoTrax")
 
-app.mainloop()
+# Botão de minimizar pra bandeja
+botao = ctk.CTkButton(root, text="Minimizar pra bandeja", command=esconder_janela)
+botao.pack(pady=20)
+
+# ... [restante do seu código] ...
+
+# Detectar minimizar para esconder a janela
+def checar_minimizacao():
+    if root.state() == 'iconic':
+        esconder_janela()
+    root.after(1000, checar_minimizacao)
+
+# Iniciar checagem de minimizar
+checar_minimizacao()
+
+root.mainloop()

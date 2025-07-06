@@ -77,7 +77,7 @@ def pomodoro(janela,tela_principal):
  iniciar_btn = ctk.CTkButton(janela,50,50,text='Começar', text_color='white', command= lambda: iniciar(25, 0,iniciar_btn,descanso_btn,cronometro, tela_principal, janela) )
  iniciar_btn.place(x=340,y=380)
 
- descanso_btn = ctk.CTkButton(janela,50,50,text='Descansar', text_color='white', command= lambda: iniciar(10, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, janela) )
+ descanso_btn = ctk.CTkButton(janela,50,50,text='Descansar', text_color='white', command= lambda: iniciar(1, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, janela) )
  descanso_btn.place(x=430,y=380)
  
  

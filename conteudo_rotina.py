@@ -2,6 +2,7 @@ import customtkinter as ctk
 import ntx_database as db
 import schedule
 import datetime
+from PIL import Image
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Sistema de frames para cada dia da semana, para auxiliar na organização
@@ -12,8 +13,8 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             segunda_frame = ctk.CTkScrollableFrame(janela, 842, 610,fg_color='gray4',scrollbar_button_color='gray23',scrollbar_button_hover_color='gray9')
             segunda_frame.pack(pady=5)
 
-            title = ctk.CTkLabel(segunda_frame, text="Segunda", font=("", 35))
-            title.pack(pady=15)
+            titulo = ctk.CTkLabel(segunda_frame, text="Segunda", font=("", 35))
+            titulo.pack(pady=15)
 
             add_tarefa_btn = ctk.CTkButton(segunda_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(segunda_frame, tela_principal,'Monday',aba_atual),
@@ -27,8 +28,8 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             terça_frame = ctk.CTkScrollableFrame(janela, 842, 610,fg_color='gray4',scrollbar_button_color='gray23',scrollbar_button_hover_color='gray9')
             terça_frame.pack(pady=5)
 
-            title = ctk.CTkLabel(terça_frame, text="Terça", font=("", 35))
-            title.pack(pady=15)
+            titulo = ctk.CTkLabel(terça_frame, text="Terça", font=("", 35))
+            titulo.pack(pady=15)
             
             add_tarefa_btn = ctk.CTkButton(  terça_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(terça_frame, tela_principal,'Tuesday',aba_atual),
@@ -42,8 +43,8 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             quarta_frame = ctk.CTkScrollableFrame(janela, 842, 610,fg_color='gray4',scrollbar_button_color='gray23',scrollbar_button_hover_color='gray9')
             quarta_frame.pack(pady=5)
 
-            title = ctk.CTkLabel(quarta_frame, text="Quarta", font=("", 35))
-            title.pack(pady=15)
+            titulo = ctk.CTkLabel(quarta_frame, text="Quarta", font=("", 35))
+            titulo.pack(pady=15)
 
             add_tarefa_btn = ctk.CTkButton( quarta_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(quarta_frame, tela_principal,'Wednesday',aba_atual),
@@ -58,8 +59,8 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             quinta_frame.pack(pady=5)
             
 
-            title = ctk.CTkLabel(quinta_frame, text="Quinta", font=("", 35))
-            title.pack(pady=15)
+            titulo = ctk.CTkLabel(quinta_frame, text="Quinta", font=("", 35))
+            titulo.pack(pady=15)
 
             add_tarefa_btn = ctk.CTkButton( quinta_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(quinta_frame, tela_principal,'Thursday',aba_atual),
@@ -73,8 +74,8 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             sexta_frame = ctk.CTkScrollableFrame(janela, 842, 610,fg_color='gray4',scrollbar_button_color='gray23',scrollbar_button_hover_color='gray9')
             sexta_frame.pack(pady=5)
 
-            title = ctk.CTkLabel(sexta_frame, text="Sexta", font=("", 35))
-            title.pack(pady=15)
+            titulo = ctk.CTkLabel(sexta_frame, text="Sexta", font=("", 35))
+            titulo.pack(pady=15)
 
             add_tarefa_btn = ctk.CTkButton( sexta_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(sexta_frame, tela_principal,'Friday',aba_atual),
@@ -88,8 +89,8 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             sabado_frame = ctk.CTkScrollableFrame(janela, 842, 610,fg_color='gray4',scrollbar_button_color='gray23',scrollbar_button_hover_color='gray9')
             sabado_frame.pack(pady=5)
 
-            title = ctk.CTkLabel(sabado_frame, text="Sábado", font=("", 35))
-            title.pack(pady=15)
+            titulo = ctk.CTkLabel(sabado_frame, text="Sábado", font=("", 35))
+            titulo.pack(pady=15)
 
             add_tarefa_btn = ctk.CTkButton( sabado_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(sabado_frame, tela_principal,'Saturday',aba_atual),
@@ -104,8 +105,8 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             domingo_frame.pack(pady=5)
             
 
-            title = ctk.CTkLabel(domingo_frame, text="Domingo", font=("", 35))
-            title.pack(pady=15)
+            titulo = ctk.CTkLabel(domingo_frame, text="Domingo", font=("", 35))
+            titulo.pack(pady=15)
 
             add_tarefa_btn = ctk.CTkButton(domingo_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(domingo_frame, tela_principal,'Sunday',aba_atual),
@@ -142,7 +143,7 @@ def criador_de_tarefas(frame_dia, tela_principal,dia,aba_atual=False):
     desc_da_tarefa.insert(index="0.0", text="Descrição da Tarefa...")
 
     hora_texto = ctk.CTkLabel(
-        tarefatela, text="Hora de ínicio.        Hora de encerramento."
+        tarefatela, text="     Ínicio                            Encerramento"
     )
     hora_texto.place(x=7, y=239)
 
@@ -233,32 +234,37 @@ def adicionar_tarefa(
 ):
  
     try:
+      
+        edit_img = ctk.CTkImage(Image.open('imagens/editar.png'))
+        excluir_img = ctk.CTkImage(Image.open('imagens/excluir.png'))
         
       #Título e criação do frame que vai acomodar as infs
         tarefa_criada = ctk.CTkFrame(
-            frame_dia, 620, 200, border_color="purple2", border_width=1
-        )
+            frame_dia, 680, 150, border_color="white", border_width=1,fg_color='gray4')
         tarefa_criada.pack(pady=7)
         
+        # Fixo ou temporario: muda a cor das bordas
+        if temp_ou_fix == 1:
+            tarefa_criada.configure(border_color="deepskyblue2")
+        elif temp_ou_fix == 2:
+            tarefa_criada.configure(border_color='yellow')
+        else:
+            temp_ou_fix = 3
+        
+        #Caso o usuário crie uma tarefa sem nome, ele vai dar um nome provisório
         if nome_da_tarefa == '':
-            nome_da_tarefa = 'tarefa_sem_nome'
+            nome_da_tarefa = 'Título da Tarefa...'
             
         
-        title = ctk.CTkEntry(
-            tarefa_criada,
-            placeholder_text=nome_da_tarefa,
-            placeholder_text_color='dodgerblue',
-            width=500,
-            font=("", 20),
+        titulo = ctk.CTkEntry(
+            tarefa_criada,placeholder_text=nome_da_tarefa,placeholder_text_color='gray69',width=615,font=("", 20),fg_color='gray7',border_color='gray4',
         )
-        title.place(x=10, y=10)
-        title.configure(state="disabled")
-        title.configure(placeholder_text="ovo")
+        titulo.place(x=10, y=10)
+        titulo.configure(state="disabled")
+        titulo.configure(placeholder_text="ovo")
 
          #Descrição
-        desc = ctk.CTkTextbox(
-            tarefa_criada, text_color='dodgerblue', width=500, height=100
-        )
+        desc = ctk.CTkTextbox(tarefa_criada, text_color='gray69', width=615, height=75,fg_color='gray7')
         desc.insert("0.0", desc_da_tarefa)
         desc.place(x=10, y=45)
         desc.configure(state="disabled")
@@ -266,22 +272,12 @@ def adicionar_tarefa(
         # Botão de editar
         def editar_taf(tela_principal,
                        dia_semana):
-            tela_principal.geometry("1250x650")
-
-            tarefatela = ctk.CTkFrame(
-                tela_principal, 245, 635, border_color='yellow', border_width=1,fg_color='gray4')
-            tarefatela.place(x=1000, y=10)
-
-            nome_novo_da_tarefa = ctk.CTkEntry(
-                tarefatela, 225, 25, placeholder_text="Título da Tarefa...",fg_color='gray9',border_color='gray4')
-            nome_novo_da_tarefa.place(x=10, y=7)
-
-            desc_nova_da_tarefa = ctk.CTkTextbox(tarefatela, 225, 200,fg_color='gray9')
-            desc_nova_da_tarefa.place(x=10, y=39)
-            desc_nova_da_tarefa.insert(index="0.0", text="Descrição da Tarefa...")
+            
+            titulo.configure(state="normal")
+            desc.configure(state="normal")
+            edit_btn.place_forget()          
             
             def update_linha():
-                print(aba_atual)
                 if aba_atual == True:
                     geometria = '1000x650'
                 else:
@@ -291,55 +287,30 @@ def adicionar_tarefa(
                     
                 id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
                 
-                if nome_novo_da_tarefa.get() == '':
+                if titulo.get() == '':
                     nome_novo = 'tarefa_sem_nome'
+                elif titulo.get() == nome_da_tarefa:
+                    nome_novo = nome_da_tarefa
                 else:
-                    nome_novo = nome_novo_da_tarefa.get()
+                    nome_novo = titulo.get()
                     
-                db.editar_linha(id_linha,nome_novo,desc_nova_da_tarefa.get("1.0","end"))
+                db.editar_linha(id_linha,nome_novo,desc.get("1.0","end"))
 
                 return (
-                    title.configure(state="normal"),
-                    title.configure(placeholder_text=nome_novo_da_tarefa.get()),
-                    title.configure(state="disabled"),
-                    desc.configure(state="normal"),
-                    desc.delete("1.0", "end"),
-                    desc.insert(index="0.0", text=desc_nova_da_tarefa.get("1.0", "end")),
+                    titulo.configure(state="disabled"),
                     desc.configure(state="disabled"),
                     excluir_btn.configure(state= 'disabled'),
                     edit_btn.configure(state='disabled'),
                     check.configure(state='disabled'),
-                    tarefatela.destroy()
+                    salvar_edit_btn.destroy(),
+                    edit_btn.place(x=635, y=55)
                 )
 
-            salvar_btn = ctk.CTkButton(
-                tarefatela,
-                text="EDITAR",
-                fg_color='yellow',
-                hover_color='gold3',
-                text_color='black',
-                width=225,
-                height=25,
-                command=update_linha,
-            )
-            salvar_btn.place(x=10, y=600)
+            salvar_edit_btn = ctk.CTkButton(tarefa_criada,text="✓",font=('',20),fg_color='yellow',hover_color='gold3',text_color='black',width=30,height=30,command=update_linha,)
+            salvar_edit_btn.place(x=635, y=55)
 
-        edit_btn = ctk.CTkButton(
-            tarefa_criada,
-            text="EDITAR",
-            width=50,
-            height=50,
-            command=lambda: editar_taf(tela_principal,dia_semana),
-        )
-        edit_btn.place(x=525, y=55)
-
-        # Fixo ou temporario
-        if temp_ou_fix == 1:
-            tarefa_criada.configure(border_color="yellow")
-        elif temp_ou_fix == 2:
-            tarefa_criada.configure(border_color='dodgerblue')
-        else:
-            temp_ou_fix = 3
+        edit_btn = ctk.CTkButton(tarefa_criada,text="",width=30,height=30,command=lambda: editar_taf(tela_principal,dia_semana),image=edit_img,fg_color='transparent',hover_color='gray4')
+        edit_btn.place(x=635, y=55)
 
         # Check Box
         estado_checkbox = ctk.IntVar(value=check_state)
@@ -373,20 +344,8 @@ def adicionar_tarefa(
                      
             db.conexao.commit()
           
-        check = ctk.CTkCheckBox(
-            tarefa_criada,
-            text="",
-            width=35,
-            checkbox_width=35,
-            checkbox_height=35,
-            fg_color='dodgerblue',
-            checkmark_color="green2",
-            variable=estado_checkbox,
-            onvalue=1,
-            offvalue=2,
-            command= chechagem
-        )
-        check.place(x=555, y=10)
+        check = ctk.CTkCheckBox(tarefa_criada,text="",width=35,checkbox_width=35,checkbox_height=35,fg_color='yellow',checkmark_color="black",variable=estado_checkbox,onvalue=1,offvalue=2,command= chechagem,hover_color='gold3',border_color='yellow')
+        check.place(x=635, y=10)
            
         dia_atual = decidir_dia_atual()
         
@@ -399,31 +358,25 @@ def adicionar_tarefa(
             id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
             db.excluir_linha(id_linha)
         
-        excluir_btn = ctk.CTkButton(
-            tarefa_criada, text="EXCLUIR", width=50, height=50, command=excluir_taf
-        )
-        excluir_btn.place(x=525, y=110)
-
+        excluir_btn = ctk.CTkButton(tarefa_criada, text="", width=30, height=30, command=excluir_taf,image=excluir_img,fg_color='transparent',hover_color='gray4')
+        excluir_btn.place(x=635, y=100)
+        
         # Tratamento de horário para salvar no banco de dados sem erros e no formato correto para funcionar na função notificadora
+        #(E a adicão da representação visual na tarefa)
+        
+        horainicio_text_label = ctk.CTkLabel(tarefa_criada,text='Inicio',font=('',15),text_color='gray69')
+        horainicio_text_label.place(x=190,y=120 )
+        
+        horafim_text_label = ctk.CTkLabel(tarefa_criada,text='Fim',font=('',15),text_color='gray69')
+        horafim_text_label.place(x=390,y=120 )        
+        
         if carregando == True:
-            horainicio_text = ctk.CTkEntry(
-            tarefa_criada,
-            53,
-            30,
-            placeholder_text=hora_inicio,
-            placeholder_text_color="green",
-            )
-            horainicio_text.place(x=190, y=155)
+            horainicio_text = ctk.CTkEntry(tarefa_criada,50,22,placeholder_text=hora_inicio,placeholder_text_color="gray69",fg_color='gray9',border_color='gray4')
+            horainicio_text.place(x=230, y=123)
             horainicio_text.configure(state="disabled")
 
-            horafim_text = ctk.CTkEntry(
-                tarefa_criada,
-                53,
-                30,
-                placeholder_text=hora_fim,
-                placeholder_text_color="firebrick2",
-            )
-            horafim_text.place(x=270, y=155)
+            horafim_text = ctk.CTkEntry(tarefa_criada,50,22,placeholder_text=hora_fim,placeholder_text_color="gray69",fg_color='gray9',border_color='gray4')
+            horafim_text.place(x=422, y=123)
             horafim_text.configure(state="disabled")
         else:
             try:
@@ -471,25 +424,14 @@ def adicionar_tarefa(
                 min_fim = 59
 
             
-            horainicio_text = ctk.CTkEntry(
-                tarefa_criada,
-                53,
-                30,
-                placeholder_text=f"{hora_inicio} : {min_inicio}",
-                placeholder_text_color="green",
-            )
-            horainicio_text.place(x=190, y=155)
+            horainicio_text = ctk.CTkEntry(tarefa_criada,50,22,placeholder_text=f"{hora_inicio} : {min_inicio}",placeholder_text_color="gray69",fg_color='gray9',border_color='gray4')
+            horainicio_text.place(x=230, y=123)
             horainicio_text.configure(state="disabled")
 
-            horafim_text = ctk.CTkEntry(
-                tarefa_criada,
-                53,
-                30,
-                placeholder_text=f"{hora_fim} : {min_fim}",
-                placeholder_text_color="firebrick2",
-            )
-            horafim_text.place(x=270, y=155)
+            horafim_text = ctk.CTkEntry(tarefa_criada,50,22,placeholder_text=f"{hora_fim} : {min_fim}",placeholder_text_color="gray69",fg_color='gray9',border_color='gray4')
+            horafim_text.place(x=422, y=123)
             horafim_text.configure(state="disabled")
+
 
 #Salva as informações no banco de dados caso não esteja apenas carregando as informações existentes
         if aba_atual == True:
@@ -528,6 +470,7 @@ def rotina_atual(janela, tela_principal):
     dias(janela, tela_principal, dia_atual,True)
     
     #Vai desmarcar todas as checkboxs do dia atual e salvar os pontos, possibilitando uma "gamificação" das tarefas
+    encerrar_dia_img = ctk.CTkImage(Image.open('imagens/encerrar_dia.png'),size=(40,40))
     def encerrar_dia():
    
         dados = db.carregar_rotina(dia_atual)
@@ -539,16 +482,8 @@ def rotina_atual(janela, tela_principal):
         rotina_atual(janela,tela_principal)
             
             
-    encerrar_dia_btn = ctk.CTkButton(
-        janela,
-        text="Encerrar Dia",
-        fg_color= 'firebrick',
-        hover_color='firebrick4',
-        width=20,
-        height=110,
-        command= encerrar_dia
-                )
-    encerrar_dia_btn.place(x=742,y=255)
+    encerrar_dia_btn = ctk.CTkButton(janela,text="",fg_color= 'gray4',bg_color='gray4',hover_color='gray4',image=encerrar_dia_img,width=50,height=50,command= encerrar_dia)
+    encerrar_dia_btn.place(x=782,y=295)
     
     loop_diario()
     tela_principal.geometry("1000x650")

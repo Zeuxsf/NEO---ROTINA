@@ -10,6 +10,7 @@ import winotify
 import schedule
 from pystray import Icon, MenuItem as item,Menu
 import threading
+import os
 import ntx_database as db
 
 #Lógica que usa lib datetime para pegar os dias e horários e transforma eles em string
@@ -34,9 +35,10 @@ conteudo_frame.place(x=129,y=10)
 configbtn_image = ctk.CTkImage(Image.open('imagens/cfg.png'))
 info_btn_image = ctk.CTkImage(Image.open('imagens/inf.png'))
 rotina_atualbtn_image = ctk.CTkImage(Image.open('imagens/rotina_atual.png'), size=(40,40))
-rotinas_btn_image = ctk.CTkImage(Image.open('imagens/rotinas.png'), size=(40,40))
+rotinas_btn_image = ctk.CTkImage(Image.open('imagens/rotinas.png'), size=(30,30))
 pontos_btn_image = ctk.CTkImage(Image.open('imagens/pontuacao.png'), size=(40,40))
-pomodoro_btn_image = ctk.CTkImage(Image.open('imagens/pomodoro.png'), size=(50,50))
+pomodoro_btn_image = ctk.CTkImage(Image.open('imagens/pomodoro.png'), size=(40,40))
+icone = Image.open('imagens/ntx_logo.ico')
 
 #Configurações da Aba Lateral, a Navegação do programa
 aba = ctk.CTkFrame(janela,120,680,fg_color='gray4')
@@ -63,7 +65,7 @@ rotina_atualbtn.place(x=33,y=35)
 
 #Botão Rotinas (Todas as rotinas)
 rotinas_btn = ctk.CTkButton(aba,10,50,text='',image=rotinas_btn_image, fg_color='transparent',font=('',100),command=lambda: conteudo_rotina.rotinas(conteudo_frame,janela),hover_color='gray4')
-rotinas_btn.place(x=33,y=122)
+rotinas_btn.place(x=34,y=122)
 
 #Botão de Pontuação (Mostra a pontuação do usuário)
 pontos_btn = ctk.CTkButton(aba,10,50,text='',image=pontos_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pontuacao.pontuacao(conteudo_frame,janela,hoje),hover_color='gray4')
@@ -71,7 +73,7 @@ pontos_btn.place(x=33,y=210)
 
 #Botão do Pomodoro pessoal
 pomodoro_btn = ctk.CTkButton(aba,10,50,text='',image=pomodoro_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pomodoro.pomodoro(conteudo_frame,janela),hover_color='gray4')
-pomodoro_btn.place(x=27,y=305)
+pomodoro_btn.place(x=33,y=305)
 
 
 #Funções que vão verificar o dia e horário para mostrar as notificações das tarefas
@@ -80,7 +82,8 @@ def decidir_dia_atual():
     return dia_atual
 
 def notificar(titulo, mensagem):
-        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem)
+        icon_path = os.path.abspath('imagens/ntx_logo.ico')
+        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem,icon=icon_path)
         notificação.show()           
 
 def loop_diario(tela_principal):
@@ -91,12 +94,12 @@ def recarregar_notifi():
     
     dia_atual = decidir_dia_atual()    
     dados = db.carregar_rotina(dia_atual)
+    dados_ontem = db.carregar_rotina(ontem)
     
     #Aproveitando o sistema de verificação das notificações para poder excluir as tarefas temporarias do dia anterior, sempre checando caso o usuário use o programa aberto direto, sem fechar
-    for linha in dados:
-        if ontem == linha[3]:
-            db.cursor.execute('''DELETE FROM trax WHERE temporario = ? AND dia = ?''',('1',ontem))
-            db.conexao.commit()
+    for linha in dados_ontem:
+        db.cursor.execute('''DELETE FROM trax WHERE temporario = ? AND dia = ?''',('1',ontem))
+        db.conexao.commit()
             
     for linha in dados:
         try:        
@@ -105,7 +108,7 @@ def recarregar_notifi():
         except Exception as e:
             print('Notificação inexistente.',e)    
 
-schedule.every(15).seconds.do(recarregar_notifi)            
+schedule.every(5).seconds.do(recarregar_notifi)            
 loop_diario(janela)
 
 #Área para levar o programa minimizado para a bandeja de aplicativos e deixar rodando em segundo plano
@@ -124,7 +127,6 @@ def encerrar_programa(icone,item):
 
 def mostrar_na_bandeja():
     global bandeja        
-    icone = Image.open('imagens/ntx_logo.ico')
     menu = Menu(
         item('Abrir',mostrar_programa),
         item('Encerrar',encerrar_programa)

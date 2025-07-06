@@ -1,7 +1,10 @@
 Pomodoro ícone = Fajrul Fitrianto
-Icone de gerenciador de rotinas = Smashicons
-ícone dia atual =  Kiranshastry
-pontos = Vectorslab
+Icone de gerenciador de rotinas = Freepik
+ícone dia atual =  KP Arts
+pontos = Dzihab
 config =  Freepik
 info = Freepik
 minimizar = pictranoosa
+editar = feen
+excluir = inkubators
+encerrar dia = nangicon

@@ -100,7 +100,7 @@ def criar_gráfico(janela):
     sexta_ponto = sexta()
     sabado_ponto = sabado()
     domingo_ponto = domingo()
-    #Eu não sabia como iterar esses números de forma simples, então fiz uma gambiarra funcional kkkkk
+    #Eu não sabia como iterar esses nomes de forma simples, então fiz uma gambiarra funcional kkkkk
     if segunda_ponto > maior_ponto:
       maior_ponto = segunda_ponto
       maior_nome = 'Segunda'

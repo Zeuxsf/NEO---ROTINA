@@ -35,10 +35,10 @@ def editar_linha(id,nome,descricao):
     cursor.execute('''UPDATE trax SET nome = ?, descricao = ? WHERE id = ?''',(nome,descricao,id))
     conexao.commit()
 
-def descobrir_id(nome_antigo,descricao_antiga,dia_semana):
+def descobrir_id(nome_antigo,descricao_antiga,dia_semana,temporario):
     dados = carregar_rotina(dia_semana)
     for linha in dados:
-        if linha[1] == nome_antigo and linha[2] == descricao_antiga and linha[3] == dia_semana:
+        if linha[1] == nome_antigo and linha[2] == descricao_antiga and linha[3] == dia_semana and linha[6] == temporario:
             return linha[0]        
 
 def carregar_rotina(dia):

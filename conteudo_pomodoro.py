@@ -1,10 +1,6 @@
 import customtkinter as ctk
 from winotify import Notification
-
-#Vai notificar o usuário quando a contagem acabar
-def notificar(titulo, mensagem):
-   notificação = Notification(app_id='NeoTrax', title=titulo, msg=mensagem)
-   notificação.show()
+import conteudo_rotina as r
 
 #Vai iniciar a contagem
 #(o parâmetro "identificador" vai dizer se é o contador de estudo ou de descanso)
@@ -41,10 +37,10 @@ def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_
             pause_btn.destroy() 
             
             if identificador == 0:
-              notificar('Temporizador Zerado!', 'Hora de ter uma PAUSA!')
+              r.notificar('Temporizador Zerado!', 'Hora de ter uma PAUSA!','pomodoro')
             
             else: 
-               notificar('Temporizador Zerado!', 'Hora de voltar pra AÇÃO!')
+               r.notificar('Temporizador Zerado!', 'Hora de voltar pra AÇÃO!','pomodoro')
     except:
          print('Contador Zerado')               
    

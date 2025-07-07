@@ -6,11 +6,9 @@ import conteudo_pomodoro as conteudo_pomodoro
 import conteudo_pontuacao as conteudo_pontuacao
 from PIL import Image
 import datetime
-import winotify
 import schedule
 from pystray import Icon, MenuItem as item,Menu
 import threading
-import os
 import ntx_database as db
 
 #Lógica que usa lib datetime para pegar os dias e horários e transforma eles em string
@@ -81,11 +79,6 @@ def decidir_dia_atual():
     dia_atual = datetime.datetime.now().strftime("%A")
     return dia_atual
 
-def notificar(titulo, mensagem):
-        icon_path = os.path.abspath('imagens/ntx_logo.ico')
-        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem,icon=icon_path)
-        notificação.show()           
-
 def loop_diario(tela_principal):
         schedule.run_pending()
         tela_principal.after(1000, lambda: loop_diario(janela))
@@ -103,8 +96,8 @@ def recarregar_notifi():
             
     for linha in dados:
         try:        
-            schedule.every().day.at(linha[4]).do(lambda t= linha[1], i= linha[2]: notificar(f'Começando: {t}',i))    
-            schedule.every().day.at(linha[5]).do(lambda t= linha[1], i= linha[2]: notificar(f'Terminando: {t}',i))
+            schedule.every().day.at(linha[4]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Começando: {t}',i))    
+            schedule.every().day.at(linha[5]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Terminando: {t}',i))
         except Exception as e:
             print('Notificação inexistente.',e)    
 

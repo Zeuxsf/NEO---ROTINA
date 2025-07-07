@@ -2,13 +2,38 @@ import customtkinter as ctk
 import ntx_database as db
 import schedule
 import datetime
+import os
+import winotify
 from PIL import Image
+import pygame
 
-#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+pygame.init()
+
+#Sistema de notificações reutilizável
+def notificar(titulo, mensagem,som = 'padrao'):
+        icon_path = os.path.abspath('imagens/ntx_logo.ico')
+        notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem,icon=icon_path)
+        
+        if som == 'padrao':
+            pygame.mixer.music.load('sons/notif_padrao.mp3')
+            pygame.mixer.music.play()
+        elif som == 'encerrar':
+            pygame.mixer.music.load('sons/encerrar_dia.mp3')
+            pygame.mixer.music.play()
+        elif som == 'pomodoro':
+            pygame.mixer.music.load('sons/pomodoro.mp3')
+            pygame.mixer.music.play()    
+                
+        notificação.show()           
+
 # Sistema de frames para cada dia da semana, para auxiliar na organização
 def dias(janela, tela_principal, mostrar=False,aba_atual=False):
+    for widget in janela.winfo_children():
+            widget.destroy()
+            
 
     def segunda():
+        
         if 'Monday' in mostrar:
             segunda_frame = ctk.CTkScrollableFrame(janela, 842, 610,fg_color='gray4',scrollbar_button_color='gray23',scrollbar_button_hover_color='gray9')
             segunda_frame.pack(pady=5)
@@ -240,7 +265,7 @@ def adicionar_tarefa(
         
       #Título e criação do frame que vai acomodar as infs
         tarefa_criada = ctk.CTkFrame(
-            frame_dia, 680, 150, border_color="white", border_width=1,fg_color='gray4')
+            frame_dia, 680, 150, border_color="gray69", border_width=1,fg_color='gray4')
         tarefa_criada.pack(pady=7)
         
         # Fixo ou temporario: muda a cor das bordas
@@ -285,7 +310,7 @@ def adicionar_tarefa(
                 
                 tela_principal.geometry(geometria)    
                     
-                id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
+                id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana,temp_ou_fix)
                 
                 if titulo.get() == '':
                     nome_novo = 'tarefa_sem_nome'
@@ -320,7 +345,7 @@ def adicionar_tarefa(
             return day
         
         def chechagem():
-            id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
+            id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana,temp_ou_fix)
             
             if estado_checkbox.get() == 1:
                 db.cursor.execute('''UPDATE trax SET pontos = pontos + 1
@@ -355,7 +380,7 @@ def adicionar_tarefa(
         # Botão de excluir
         def excluir_taf():
             tarefa_criada.destroy()
-            id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana)
+            id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana,temp_ou_fix)
             db.excluir_linha(id_linha)
         
         excluir_btn = ctk.CTkButton(tarefa_criada, text="", width=30, height=30, command=excluir_taf,image=excluir_img,fg_color='transparent',hover_color='gray4')
@@ -462,18 +487,19 @@ def rotina_atual(janela, tela_principal):
     def loop_diario():
         schedule.run_pending()
         tela_principal.after(1000, loop_diario)
-      
     
     dia_atual = decidir_dia_atual()
-    
     
     dias(janela, tela_principal, dia_atual,True)
     
     #Vai desmarcar todas as checkboxs do dia atual e salvar os pontos, possibilitando uma "gamificação" das tarefas
     encerrar_dia_img = ctk.CTkImage(Image.open('imagens/encerrar_dia.png'),size=(40,40))
     def encerrar_dia():
-   
         dados = db.carregar_rotina(dia_atual)
+        
+        pontos_totais_do_dia = db.buscar_pontos_totais(dia_atual)
+        notificar('Dia Encerrado!',f'Parabéns Usuário você tem o Total de {pontos_totais_do_dia} Pontos no dia Atual!','encerrar')
+        
             
         for linha in dados:
                 db.cursor.execute('''UPDATE trax SET checkbox = 2 WHERE dia = ?''', (dia_atual,))
@@ -490,36 +516,30 @@ def rotina_atual(janela, tela_principal):
     
 #Vai mostrar a rotina que o usuário escolher, tem acesso a todos os dias da semana, para o usuário poder organizar sua rotina semanal ou apenas visualizar    
 def rotinas(janela, tela_principal):
-    
-    def apagar():
-        for widget in janela.winfo_children():
-            widget.destroy()
+    for widget in janela.winfo_children():
+        widget.destroy()
 
-    apagar()
     
     tela_principal.geometry("1080x650")
     
-    segunda_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Monday'))
-    segunda_btn.place(x=1000,y=10)
+    segunda_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Monday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    segunda_btn.place(x=1000,y=35)
         
-    terça_btn = ctk.CTkButton(tela_principal,70,70,text='T',command=lambda:dias(janela,tela_principal,'Tuesday'))
-    terça_btn.place(x=1000,y=90)
+    terça_btn = ctk.CTkButton(tela_principal,70,70,text='T',command=lambda:dias(janela,tela_principal,'Tuesday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    terça_btn.place(x=1000,y=115)
         
-    quarta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Wednesday'))
-    quarta_btn.place(x=1000,y=170)    
+    quarta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Wednesday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    quarta_btn.place(x=1000,y=195)    
         
-    quinta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Thursday'))
-    quinta_btn.place(x=1000,y=250)
+    quinta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Thursday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    quinta_btn.place(x=1000,y=275)
         
-    sexta_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Friday'))
-    sexta_btn.place(x=1000,y=330)
+    sexta_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Friday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    sexta_btn.place(x=1000,y=355)
         
-    sabado_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Saturday'))
-    sabado_btn.place(x=1000,y=410)
+    sabado_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Saturday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    sabado_btn.place(x=1000,y=435)
         
-    domingo_btn = ctk.CTkButton(tela_principal,70,70,text='D',command=lambda:dias(janela,tela_principal,'Sunday'))
-    domingo_btn.place(x=1000,y=490)
+    domingo_btn = ctk.CTkButton(tela_principal,70,70,text='D',command=lambda:dias(janela,tela_principal,'Sunday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    domingo_btn.place(x=1000,y=515)
     
-    delete_tudo_btn = ctk.CTkButton(tela_principal,70,70,text='Delete',command=lambda:apagar())
-    delete_tudo_btn.place(x=1000,y=570)
-              

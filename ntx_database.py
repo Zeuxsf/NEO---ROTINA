@@ -46,15 +46,34 @@ def carregar_rotina(dia):
     cursor.execute('''SELECT * FROM trax WHERE dia = ?''', (dia,))
     return cursor.fetchall()    
 
-def buscar_pontos_totais(dia):
-    cursor.execute('''SELECT SUM(pontos) FROM trax WHERE dia = ?''', (dia,))
+def buscar_pontos_totais(dia,tipo='geral'):
+    if tipo == 'geral':
+        cursor.execute('''SELECT SUM(pontos) FROM trax WHERE dia = ?''', (dia,))
+        pontos = cursor.fetchone()
+        try:
+            pontos = int(pontos[0])
+        except:
+            pontos = 0  
+        return pontos
+    elif tipo == 'tarefa':
+        try:
+            cursor.execute('''SELECT nome FROM trax WHERE dia = ? ORDER BY pontos DESC LIMIT 1''', (dia,))
+            resultado = cursor.fetchone()
+            taf = str(resultado[0]).lower()
+        except:
+            taf = 'N/A'    
+        return taf
+
+def media_pontos():
+    cursor.execute('''SELECT AVG(pontos) FROM trax''')
     pontos = cursor.fetchone()
     try:
-        pontos = float(pontos[0])
-        pontos = pontos / 100
-    except:
-        pontos = 0.00  
+        pontos = f'{float(pontos[0]):.2f}'
+    except Exception as e:
+        pontos = 0
+        print(e)
     return pontos
-
+    
+    
 def encerrar_conexao():
     conexao.close()

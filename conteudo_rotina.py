@@ -41,7 +41,7 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             titulo = ctk.CTkLabel(segunda_frame, text="Segunda", font=("", 35))
             titulo.pack(pady=15)
 
-            add_tarefa_btn = ctk.CTkButton(segunda_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
+            add_tarefa_btn = ctk.CTkButton(segunda_frame,text="+",text_color='gray2',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(segunda_frame, tela_principal,'Monday',aba_atual),
             )
             add_tarefa_btn.place(x=490, y=30)
@@ -56,7 +56,7 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             titulo = ctk.CTkLabel(terça_frame, text="Terça", font=("", 35))
             titulo.pack(pady=15)
             
-            add_tarefa_btn = ctk.CTkButton(  terça_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
+            add_tarefa_btn = ctk.CTkButton(  terça_frame,text="+",text_color='gray2',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(terça_frame, tela_principal,'Tuesday',aba_atual),
             )
             add_tarefa_btn.place(x=490, y=30)
@@ -71,7 +71,7 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             titulo = ctk.CTkLabel(quarta_frame, text="Quarta", font=("", 35))
             titulo.pack(pady=15)
 
-            add_tarefa_btn = ctk.CTkButton( quarta_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
+            add_tarefa_btn = ctk.CTkButton( quarta_frame,text="+",text_color='gray2',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(quarta_frame, tela_principal,'Wednesday',aba_atual),
             )
             add_tarefa_btn.place(x=490, y=30)
@@ -87,7 +87,7 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             titulo = ctk.CTkLabel(quinta_frame, text="Quinta", font=("", 35))
             titulo.pack(pady=15)
 
-            add_tarefa_btn = ctk.CTkButton( quinta_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
+            add_tarefa_btn = ctk.CTkButton( quinta_frame,text="+",text_color='gray2',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(quinta_frame, tela_principal,'Thursday',aba_atual),
             )
             add_tarefa_btn.place(x=490, y=30)
@@ -102,7 +102,7 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             titulo = ctk.CTkLabel(sexta_frame, text="Sexta", font=("", 35))
             titulo.pack(pady=15)
 
-            add_tarefa_btn = ctk.CTkButton( sexta_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
+            add_tarefa_btn = ctk.CTkButton( sexta_frame,text="+",text_color='gray2',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(sexta_frame, tela_principal,'Friday',aba_atual),
             )
             add_tarefa_btn.place(x=490, y=30)
@@ -117,7 +117,7 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             titulo = ctk.CTkLabel(sabado_frame, text="Sábado", font=("", 35))
             titulo.pack(pady=15)
 
-            add_tarefa_btn = ctk.CTkButton( sabado_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
+            add_tarefa_btn = ctk.CTkButton( sabado_frame,text="+",text_color='gray2',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(sabado_frame, tela_principal,'Saturday',aba_atual),
             )
             add_tarefa_btn.place(x=490, y=30)
@@ -133,7 +133,7 @@ def dias(janela, tela_principal, mostrar=False,aba_atual=False):
             titulo = ctk.CTkLabel(domingo_frame, text="Domingo", font=("", 35))
             titulo.pack(pady=15)
 
-            add_tarefa_btn = ctk.CTkButton(domingo_frame,text="+",text_color='black',fg_color='yellow',hover_color='gold3',width=20,height=20,
+            add_tarefa_btn = ctk.CTkButton(domingo_frame,text="+",text_color='gray2',fg_color='yellow',hover_color='gold3',width=20,height=20,
                 command=lambda: criador_de_tarefas(domingo_frame, tela_principal,'Sunday',aba_atual),
             )
             add_tarefa_btn.place(x=490, y=30)
@@ -195,10 +195,11 @@ def criador_de_tarefas(frame_dia, tela_principal,dia,aba_atual=False):
 
     salvar_btn = ctk.CTkButton(
         tarefatela,
-        text="SALVAR",
+        text="✓",
         fg_color='yellow',
         hover_color='gold3',
-        text_color='black',
+        text_color='gray2',
+        font=('',20),
         width=225,
         height=25,
         command=lambda: adicionar_tarefa(
@@ -313,7 +314,7 @@ def adicionar_tarefa(
                 id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana,temp_ou_fix)
                 
                 if titulo.get() == '':
-                    nome_novo = 'tarefa_sem_nome'
+                    nome_novo = 'Título da Tarefa...'
                 elif titulo.get() == nome_da_tarefa:
                     nome_novo = nome_da_tarefa
                 else:
@@ -331,7 +332,7 @@ def adicionar_tarefa(
                     edit_btn.place(x=635, y=55)
                 )
 
-            salvar_edit_btn = ctk.CTkButton(tarefa_criada,text="✓",font=('',20),fg_color='yellow',hover_color='gold3',text_color='black',width=30,height=30,command=update_linha,)
+            salvar_edit_btn = ctk.CTkButton(tarefa_criada,text="✓",font=('',20),fg_color='yellow',hover_color='gold3',text_color='gray2',width=30,height=30,command=update_linha,)
             salvar_edit_btn.place(x=635, y=55)
 
         edit_btn = ctk.CTkButton(tarefa_criada,text="",width=30,height=30,command=lambda: editar_taf(tela_principal,dia_semana),image=edit_img,fg_color='transparent',hover_color='gray4')
@@ -369,7 +370,7 @@ def adicionar_tarefa(
                      
             db.conexao.commit()
           
-        check = ctk.CTkCheckBox(tarefa_criada,text="",width=35,checkbox_width=35,checkbox_height=35,fg_color='yellow',checkmark_color="black",variable=estado_checkbox,onvalue=1,offvalue=2,command= chechagem,hover_color='gold3',border_color='yellow')
+        check = ctk.CTkCheckBox(tarefa_criada,text="",width=35,checkbox_width=35,checkbox_height=35,fg_color='yellow',checkmark_color="gray2",variable=estado_checkbox,onvalue=1,offvalue=2,command= chechagem,hover_color='gold3',border_color='yellow')
         check.place(x=635, y=10)
            
         dia_atual = decidir_dia_atual()
@@ -522,24 +523,24 @@ def rotinas(janela, tela_principal):
     
     tela_principal.geometry("1080x650")
     
-    segunda_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Monday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    segunda_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Monday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     segunda_btn.place(x=1000,y=35)
         
-    terça_btn = ctk.CTkButton(tela_principal,70,70,text='T',command=lambda:dias(janela,tela_principal,'Tuesday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    terça_btn = ctk.CTkButton(tela_principal,70,70,text='T',command=lambda:dias(janela,tela_principal,'Tuesday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     terça_btn.place(x=1000,y=115)
         
-    quarta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Wednesday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    quarta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Wednesday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     quarta_btn.place(x=1000,y=195)    
         
-    quinta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Thursday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    quinta_btn = ctk.CTkButton(tela_principal,70,70,text='Q',command=lambda:dias(janela,tela_principal,'Thursday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     quinta_btn.place(x=1000,y=275)
         
-    sexta_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Friday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    sexta_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Friday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     sexta_btn.place(x=1000,y=355)
         
-    sabado_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Saturday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    sabado_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Saturday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     sabado_btn.place(x=1000,y=435)
         
-    domingo_btn = ctk.CTkButton(tela_principal,70,70,text='D',command=lambda:dias(janela,tela_principal,'Sunday'),font=('',30),text_color='gray69',hover_color='black',fg_color='transparent')
+    domingo_btn = ctk.CTkButton(tela_principal,70,70,text='D',command=lambda:dias(janela,tela_principal,'Sunday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     domingo_btn.place(x=1000,y=515)
     

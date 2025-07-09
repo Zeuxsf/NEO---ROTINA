@@ -12,7 +12,7 @@ def criar_gráfico(janela):
     progress.set(db.buscar_pontos_totais('Monday')/100)
     progress.place(x=25, y= 18)
     
-    return(db.buscar_pontos_totais('Monday'))
+    return(db.buscar_pontos_totais('Monday'),db.buscar_pontos_totais('Monday','tarefa'))
     
   def terça():
     nome_dia = ctk.CTkLabel(janela,text='T',font=('',20),text_color='gray69')
@@ -32,7 +32,7 @@ def criar_gráfico(janela):
     progress.set(db.buscar_pontos_totais('Wednesday')/100)
     progress.place(x=25, y= 132)
     
-    return(db.buscar_pontos_totais('Wednesday'))
+    return(db.buscar_pontos_totais('Wednesday'),db.buscar_pontos_totais('Wednesday','tarefa'))
     
   def quinta():
     nome_dia = ctk.CTkLabel(janela,text='Q',font=('',20),text_color='gray69')
@@ -42,7 +42,7 @@ def criar_gráfico(janela):
     progress.set(db.buscar_pontos_totais('Thursday')/100)
     progress.place(x=25, y= 189)
     
-    return(db.buscar_pontos_totais('Thursday'))
+    return(db.buscar_pontos_totais('Thursday'),db.buscar_pontos_totais('Thursday','tarefa'))
     
   def sexta():
     nome_dia = ctk.CTkLabel(janela,text='S',font=('',20),text_color='gray69')
@@ -52,7 +52,7 @@ def criar_gráfico(janela):
     progress.set(db.buscar_pontos_totais('Friday')/100)
     progress.place(x=25, y= 246)
     
-    return(db.buscar_pontos_totais('Friday'))
+    return(db.buscar_pontos_totais('Friday'),db.buscar_pontos_totais('Friday','tarefa'))
     
   def sabado():
     nome_dia = ctk.CTkLabel(janela,text='S',font=('',20),text_color='gray69')
@@ -62,7 +62,7 @@ def criar_gráfico(janela):
     progress.set(db.buscar_pontos_totais('Saturday')/100)
     progress.place(x=25, y= 303)
     
-    return(db.buscar_pontos_totais('Saturday'))
+    return(db.buscar_pontos_totais('Saturday'),db.buscar_pontos_totais('Saturday','tarefa'))
     
   def domingo():
     nome_dia = ctk.CTkLabel(janela,text='D',font=('',20),text_color='gray69')
@@ -72,7 +72,7 @@ def criar_gráfico(janela):
     progress.set(db.buscar_pontos_totais('Sunday')/100)
     progress.place(x=25, y= 360)
     
-    return(db.buscar_pontos_totais('Sunday'))                      
+    return(db.buscar_pontos_totais('Sunday'),db.buscar_pontos_totais('Sunday','tarefa'))                      
 
 #Comparador separado para a função seguinte
   def comparar_pontos():
@@ -80,36 +80,49 @@ def criar_gráfico(janela):
     maior_nome = 'N/A'
     maior_tarefa = 'N/A'
     try:
-      segunda_ponto = segunda()
+      segunda_ponto, segunda_tarefa = segunda()
       terça_ponto,terça_tarefa = terça()
-      quarta_ponto = quarta()
-      quinta_ponto = quinta()
-      sexta_ponto = sexta()
-      sabado_ponto = sabado()
-      domingo_ponto = domingo()
+      quarta_ponto, quarta_tarefa = quarta()
+      quinta_ponto, quinta_tarefa = quinta()
+      sexta_ponto, sexta_tarefa = sexta()
+      sabado_ponto, sabado_tarefa = sabado()
+      domingo_ponto, domingo_tarefa = domingo()
       #Eu não sabia como iterar esses nomes de forma simples, então fiz uma gambiarra funcional kkkkk
+      
       if segunda_ponto > maior_ponto:
         maior_ponto = segunda_ponto
         maior_nome = 'Segunda - Feira'
+        maior_tarefa = segunda_tarefa
+      
       if terça_ponto > maior_ponto:
         maior_ponto = terça_ponto
         maior_nome = 'Terça - Feira'
         maior_tarefa = terça_tarefa
+      
       if quarta_ponto > maior_ponto:
         maior_ponto = quarta_ponto
-        maior_nome = 'Quarta - Feira'    
+        maior_nome = 'Quarta - Feira'
+        maior_tarefa = quarta_tarefa    
+      
       if quinta_ponto > maior_ponto:
         maior_ponto = quinta_ponto
         maior_nome = 'Quinta - Feira'
+        maior_tarefa = quinta_tarefa
+      
       if sexta_ponto > maior_ponto:
         maior_ponto = sexta_ponto
         maior_nome = 'Sexta - Feira'
+        maior_tarefa = sexta_tarefa
+      
       if sabado_ponto > maior_ponto:
         maior_ponto = sabado_ponto
         maior_nome = 'Sábado'
+        maior_tarefa = sabado_tarefa
+      
       if domingo_ponto > maior_ponto:
         maior_ponto = domingo_ponto
         maior_nome = 'Domingo'
+        maior_tarefa = domingo_tarefa
     except:
         maior_ponto = 0.00
         maior_nome = 'N/A'
@@ -141,7 +154,7 @@ def criar_gráfico(janela):
     pontos_totais = ctk.CTkLabel(maior_pontuação_frame,text=maior_ponto,fg_color='transparent',font=('',15))
     pontos_totais.place(x=300,y=90)
 
-    if len(maior_tarefa) > 26:
+    if len(maior_tarefa) > 20:
       maior_tarefa = f'{maior_tarefa[:20]}...'
     
     tarefa_mais_feita_titulo = ctk.CTkLabel(maior_pontuação_frame,text='Tarefa mais pontuada do dia:',font=('',15),text_color='gray69')

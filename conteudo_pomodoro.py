@@ -1,6 +1,12 @@
 import customtkinter as ctk
-from winotify import Notification
+from PIL import Image
 import conteudo_rotina as r
+
+pause_btn_image = ctk.CTkImage(Image.open('imagens/pausa.png'),size=(40,40))
+play_btn_image = ctk.CTkImage(Image.open('imagens/play.png'),size=(40,40))
+descanso_btn_image = ctk.CTkImage(Image.open('imagens/descanso.png'),size=(40,40))
+iniciar_btn_image = ctk.CTkImage(Image.open('imagens/começar.png'),size=(40,40))
+reiniciar_btn_image = ctk.CTkImage(Image.open('imagens/reiniciar.png'),size=(40,40))
 
 #Vai iniciar a contagem
 #(o parâmetro "identificador" vai dizer se é o contador de estudo ou de descanso)
@@ -28,13 +34,15 @@ def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_
             tela_principal.after(1000,atualizar)
          else:
             iniciar_btn.place(x=340,y=380)
-            descanso_btn.place(x=430,y=380)
-            pause_btn.destroy()       
+            descanso_btn.place(x=465,y=380)
+            pause_btn.destroy()
+            reiniciar_btn.destroy()       
             
          if segundos == 0:
             iniciar_btn.place(x=340,y=380)
-            descanso_btn.place(x=430,y=380)
-            pause_btn.destroy() 
+            descanso_btn.place(x=465,y=380)
+            pause_btn.destroy()
+            reiniciar_btn.destroy() 
             
             if identificador == 0:
               r.notificar('Temporizador Zerado!', 'Hora de ter uma PAUSA!','pomodoro')
@@ -48,15 +56,17 @@ def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_
    def pause():
       nonlocal pausado
       pausado = not pausado
-      troca_texto = 'Continuar' if pausado else 'Pausar'
+      troca_img = play_btn_image if pausado else pause_btn_image
          
-      pause_btn.configure(text = troca_texto)
+      pause_btn.configure(image = troca_img)
       
       if not pausado:
        atualizar()
                   
-   pause_btn = ctk.CTkButton(janela,50,50,text='Pausar', text_color='white', command=pause)
-   pause_btn.place(x=380,y=380)      
+   pause_btn = ctk.CTkButton(janela,50,50,text='', image=pause_btn_image,fg_color='transparent',hover_color='gray2', command=pause)
+   pause_btn.place(x=380,y=380)
+   reiniciar_btn = ctk.CTkButton(janela,50,50,text='', image=reiniciar_btn_image,fg_color='transparent',hover_color='gray2', command=lambda:pomodoro(janela,tela_principal))
+   reiniciar_btn.place(x=430,y=380)      
 
    atualizar()
          
@@ -67,14 +77,14 @@ def pomodoro(janela,tela_principal):
 
  tela_principal.geometry('1000x650')    
 
- cronometro = ctk.CTkLabel(janela,20,20,text='00:00',text_color='white',font=('Franklin Gothic',110))
- cronometro.place(x=298,y=98)
+ cronometro = ctk.CTkLabel(janela,20,20,text='00:00',text_color='white',font=('Franklin Gothic',200))
+ cronometro.place(x=180,y=98)
  
- iniciar_btn = ctk.CTkButton(janela,50,50,text='Começar', text_color='white', command= lambda: iniciar(25, 0,iniciar_btn,descanso_btn,cronometro, tela_principal, janela) )
+ iniciar_btn = ctk.CTkButton(janela,50,50,text='', image=iniciar_btn_image,fg_color='transparent',hover_color='gray2', command= lambda: iniciar(25, 0,iniciar_btn,descanso_btn,cronometro, tela_principal, janela) )
  iniciar_btn.place(x=340,y=380)
 
- descanso_btn = ctk.CTkButton(janela,50,50,text='Descansar', text_color='white', command= lambda: iniciar(1, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, janela) )
- descanso_btn.place(x=430,y=380)
+ descanso_btn = ctk.CTkButton(janela,50,50,text='', image=descanso_btn_image,fg_color='transparent',hover_color='gray2', command= lambda: iniciar(1, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, janela) )
+ descanso_btn.place(x=465,y=380)
  
  
 

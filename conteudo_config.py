@@ -16,10 +16,16 @@ def carregar_configs():
          return dados    
    except Exception as e:
       print(e)
-      return  {'usuario': 'usuario_1', 'p_tempo':25,'p_descanso':5,'iniciar_windows':True}
+      return  {'usuario': 'usuario_1', 'p_tempo':25,'p_descanso':5,'iniciar_windows':False}
 
 #Função para salvar os dados alterados no arquivo
-def salvar_configs(dados,nome,p_tempo,p_descanso,iniciar,janela,tela_principal):
+def salvar_configs(dados,nome,p_tempo,p_descanso,iniciar,janela,tela_principal,tela_bvd = ''):
+   if nome == '':
+      nome = 'usuario_1'
+      
+   if tela_bvd != '':
+      tela_bvd.destroy()   
+   
    dados['usuario'] = nome
    dados['p_tempo'] = p_tempo
    dados['p_descanso'] = p_descanso
@@ -42,7 +48,7 @@ def reset(janela,tela_principal):
          os.remove(arquivo)
       db.reset()
       if os.path.exists('ntx_configs.json') == False:
-         salvar_configs(carregar_configs(),'usuario_123',25,5,True,janela,tela_principal)
+         salvar_configs(carregar_configs(),'usuario_1',25,5,False,janela,tela_principal)
 
 #Função para fazer o programa iniciar (ou não) com o computador
 def iniciar_com_windows(indicador=True):

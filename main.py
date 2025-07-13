@@ -38,6 +38,7 @@ rotina_atualbtn_image = ctk.CTkImage(Image.open('imagens/rotina_atual.png'), siz
 rotinas_btn_image = ctk.CTkImage(Image.open('imagens/rotinas.png'), size=(30,30))
 pontos_btn_image = ctk.CTkImage(Image.open('imagens/pontuacao.png'), size=(40,40))
 pomodoro_btn_image = ctk.CTkImage(Image.open('imagens/pomodoro.png'), size=(40,40))
+prosseguir_btn_image = ctk.CTkImage(Image.open('imagens/prosseguir.png'), size=(50,50))
 icone = Image.open('imagens/ntx_logo.ico')
 
 #Configurações da Aba Lateral, a Navegação do programa
@@ -142,7 +143,17 @@ checar_minimizar()
 
 #Vai criar o arquivo de configurações
 if os.path.exists('ntx_configs.json') == False:
-    j.salvar_configs(dados,'usuario_123',25,5,True,conteudo_frame,janela)
+    tela_bemvindo = ctk.CTkFrame(janela,1000,650,fg_color='gray2')
+    tela_bemvindo.place(x=1,y=1)
+    
+    texto_bemvindo = ctk.CTkLabel(tela_bemvindo,text='Seja Bem-Vindo(a)!',font=('Arial',100),text_color='yellow')
+    texto_bemvindo.place(x=62,y=100)
+    
+    nome_usuario = ctk.CTkEntry(tela_bemvindo,960,100,fg_color='gray2',text_color='yellow',placeholder_text='Qual é o seu nome?',placeholder_text_color='gray69',font=('Arial',100),border_color='gray2')
+    nome_usuario.place(x=50,y=250)
+    
+    prosseguir_btn = ctk.CTkButton(tela_bemvindo,image=prosseguir_btn_image,text='',fg_color='transparent',hover_color='gray2',command=lambda: j.salvar_configs(dados,nome_usuario.get(),25,5,False,conteudo_frame,janela,tela_bemvindo))
+    prosseguir_btn.place(x=420,y=450)
 
 #Encerrando programa e banco de dados
 janela.mainloop()

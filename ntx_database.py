@@ -74,6 +74,11 @@ def media_pontos():
         print(e)
     return pontos
     
+def reset():
+    cursor.execute('''DELETE FROM trax''')
+    cursor.execute('''DELETE FROM sqlite_sequence WHERE name="trax"''')
+    conexao.commit()
+
     
 def encerrar_conexao():
     conexao.close()

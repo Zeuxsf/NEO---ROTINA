@@ -10,6 +10,8 @@ import schedule
 from pystray import Icon, MenuItem as item,Menu
 import threading
 import ntx_database as db
+import conteudo_config as j
+import os
 
 #Lógica que usa lib datetime para pegar os dias e horários e transforma eles em string
 hoje = datetime.datetime.now()
@@ -73,6 +75,8 @@ pontos_btn.place(x=33,y=210)
 pomodoro_btn = ctk.CTkButton(aba,10,50,text='',image=pomodoro_btn_image, fg_color='transparent',font=('',100),command=lambda:conteudo_pomodoro.pomodoro(conteudo_frame,janela),hover_color='gray4')
 pomodoro_btn.place(x=33,y=305)
 
+#Vai carregar o arquivo de configuração para rodar algumas customizações
+dados = j.carregar_configs()
 
 #Funções que vão verificar o dia e horário para mostrar as notificações das tarefas
 def decidir_dia_atual():
@@ -97,7 +101,7 @@ def recarregar_notifi():
     for linha in dados:
         try:        
             schedule.every().day.at(linha[4]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Começando: {t}',i))    
-            schedule.every().day.at(linha[5]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Terminando: {t}',i))
+            schedule.every().day.at(linha[5]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Encerrando: {t}',i))
         except Exception as e:
             print('Notificação inexistente.',e)    
 
@@ -124,7 +128,8 @@ def mostrar_na_bandeja():
         item('Abrir',mostrar_programa),
         item('Encerrar',encerrar_programa)
     )
-    bandeja = Icon('NeoTrax',icone,'NeoTrax!',menu)
+    usuario = dados['usuario']
+    bandeja = Icon('NeoTrax',icone,f'NeoTrax - {usuario}',menu)
     threading.Thread(target=bandeja.run,daemon=True).start()
 
 def checar_minimizar():
@@ -134,6 +139,10 @@ def checar_minimizar():
 
 #Vai checar se o programa foi minimizado e vai esconder ele na bandeja
 checar_minimizar()
+
+#Vai criar o arquivo de configurações
+if os.path.exists('ntx_configs.json') == False:
+    j.salvar_configs(dados,'usuario_123',25,5,True,conteudo_frame,janela)
 
 #Encerrando programa e banco de dados
 janela.mainloop()

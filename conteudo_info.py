@@ -7,4 +7,4 @@ def info(jnl,tela_principal):
 
  tela_principal.geometry('1000x650')    
  title = ctk.CTkLabel(jnl,text='EM OBRA',font = ('',120))
- title.pack()    
+ title.place(x=50,y=50)  

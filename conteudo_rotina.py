@@ -6,6 +6,7 @@ import os
 import winotify
 from PIL import Image
 import pygame
+import conteudo_config as j
 
 pygame.init()
 
@@ -279,15 +280,13 @@ def adicionar_tarefa(
         
         #Caso o usuário crie uma tarefa sem nome, ele vai dar um nome provisório
         if nome_da_tarefa == '':
-            nome_da_tarefa = 'Título da Tarefa...'
-            
+            nome_da_tarefa = 'Título da Tarefa...'   
         
         titulo = ctk.CTkEntry(
             tarefa_criada,placeholder_text=nome_da_tarefa,placeholder_text_color='gray69',width=615,font=("", 20),fg_color='gray7',border_color='gray4',
         )
         titulo.place(x=10, y=10)
         titulo.configure(state="disabled")
-        titulo.configure(placeholder_text="ovo")
 
          #Descrição
         desc = ctk.CTkTextbox(tarefa_criada, text_color='gray69', width=615, height=75,fg_color='gray7')
@@ -314,8 +313,6 @@ def adicionar_tarefa(
                 id_linha = db.descobrir_id(nome_da_tarefa,desc_da_tarefa,dia_semana,temp_ou_fix)
                 
                 if titulo.get() == '':
-                    nome_novo = 'Título da Tarefa...'
-                elif titulo.get() == nome_da_tarefa:
                     nome_novo = nome_da_tarefa
                 else:
                     nome_novo = titulo.get()
@@ -498,8 +495,9 @@ def rotina_atual(janela, tela_principal):
     def encerrar_dia():
         dados = db.carregar_rotina(dia_atual)
         
+        usuario = j.carregar_configs()['usuario']
         pontos_totais_do_dia = db.buscar_pontos_totais(dia_atual)
-        notificar('Dia Encerrado!',f'Parabéns Usuário você tem o Total de {pontos_totais_do_dia} Pontos no dia Atual!','encerrar')
+        notificar('Dia Encerrado!',f'Parabéns {usuario} você tem o Total de {pontos_totais_do_dia} Pontos no dia Atual!','encerrar')
         
             
         for linha in dados:
@@ -521,7 +519,11 @@ def rotinas(janela, tela_principal):
         widget.destroy()
 
     
-    tela_principal.geometry("1080x650")
+    tela_principal.geometry("1080x650")    
+    mais = ctk.CTkLabel(janela,text='+',font = ('',250),text_color='gray9')
+    mais.place(x=380,y=125)   
+    title = ctk.CTkLabel(janela,text='Escolha uma rotina para editar',font = ('',30),text_color='gray9')
+    title.place(x=260,y=355)
     
     segunda_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Monday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     segunda_btn.place(x=1000,y=35)

@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
 import conteudo_rotina as r
+import conteudo_config as j
 
 pause_btn_image = ctk.CTkImage(Image.open('imagens/pausa.png'),size=(40,40))
 play_btn_image = ctk.CTkImage(Image.open('imagens/play.png'),size=(40,40))
@@ -44,11 +45,12 @@ def iniciar(minutos, identificador, iniciar_btn, descanso_btn, cronometro, tela_
             pause_btn.destroy()
             reiniciar_btn.destroy() 
             
+            usuario = j.carregar_configs()['usuario']
             if identificador == 0:
-              r.notificar('Temporizador Zerado!', 'Hora de ter uma PAUSA!','pomodoro')
+              r.notificar('Temporizador Zerado!', f'Hora de ter uma PAUSA {usuario}!','pomodoro')
             
             else: 
-               r.notificar('Temporizador Zerado!', 'Hora de voltar pra AÇÃO!','pomodoro')
+               r.notificar('Temporizador Zerado!', f'Hora de você voltar pra AÇÃO {usuario}!','pomodoro')
     except:
          print('Contador Zerado')               
    
@@ -80,10 +82,12 @@ def pomodoro(janela,tela_principal):
  cronometro = ctk.CTkLabel(janela,20,20,text='00:00',text_color='white',font=('Franklin Gothic',200))
  cronometro.place(x=180,y=98)
  
- iniciar_btn = ctk.CTkButton(janela,50,50,text='', image=iniciar_btn_image,fg_color='transparent',hover_color='gray2', command= lambda: iniciar(25, 0,iniciar_btn,descanso_btn,cronometro, tela_principal, janela) )
+ dados = j.carregar_configs()
+ 
+ iniciar_btn = ctk.CTkButton(janela,50,50,text='', image=iniciar_btn_image,fg_color='transparent',hover_color='gray2', command= lambda: iniciar(int(dados['p_tempo']), 0,iniciar_btn,descanso_btn,cronometro, tela_principal, janela) )
  iniciar_btn.place(x=340,y=380)
 
- descanso_btn = ctk.CTkButton(janela,50,50,text='', image=descanso_btn_image,fg_color='transparent',hover_color='gray2', command= lambda: iniciar(1, 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, janela) )
+ descanso_btn = ctk.CTkButton(janela,50,50,text='', image=descanso_btn_image,fg_color='transparent',hover_color='gray2', command= lambda: iniciar(int(dados['p_descanso']), 1,iniciar_btn,   descanso_btn,cronometro, tela_principal, janela) )
  descanso_btn.place(x=465,y=380)
  
  

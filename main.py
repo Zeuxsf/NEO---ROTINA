@@ -25,7 +25,7 @@ janela.geometry('1000x650')
 janela.resizable(False,False)
 janela.title('NeoTrax')
 janela.iconbitmap(db.caminho('imagens/ntx_logo.ico'))
-#ctk.set_appearance_mode('light')
+ctk.set_appearance_mode('dark')
 
 #Uma tela scrolável, pro programa ter liberdade de crescer
 conteudo_frame = ctk.CTkFrame(janela,844,670,fg_color='transparent')

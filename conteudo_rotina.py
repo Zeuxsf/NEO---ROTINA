@@ -367,7 +367,7 @@ def adicionar_tarefa(
                      
             db.conexao.commit()
           
-        check = ctk.CTkCheckBox(tarefa_criada,text="",width=35,checkbox_width=35,checkbox_height=35,fg_color='gray2',checkmark_color="yellow",variable=estado_checkbox,onvalue=1,offvalue=2,command= chechagem,hover_color='gray2',border_color='yellow')
+        check = ctk.CTkCheckBox(tarefa_criada,text="",width=35,checkbox_width=35,checkbox_height=35,fg_color='gray4',checkmark_color="yellow",variable=estado_checkbox,onvalue=1,offvalue=2,command= chechagem,hover_color='gray4',border_color='yellow')
         check.place(x=635, y=10)
            
         dia_atual = decidir_dia_atual()

@@ -7,19 +7,17 @@ import winreg
 import sys
 import conteudo_info
 
-arquivo = 'ntx_configs.json'
-
-#Função para carregar o arquivo json
+#Função para carregar o db.caminho_dados('ntx_configs.json') json
 def carregar_configs():   
    try:
-      with open('ntx_configs.json','r') as file:
+      with open(db.caminho_dados('ntx_configs.json'),'r') as file:
          dados = json.load(file)
          return dados    
    except Exception as e:
       print(e)
       return  {'usuario': 'usuario_1', 'p_tempo':25,'p_descanso':5,'iniciar_windows':False}
 
-#Função para salvar os dados alterados no arquivo
+#Função para salvar os dados alterados no db.caminho_dados('ntx_configs.json')
 def salvar_configs(dados,nome,p_tempo,p_descanso,iniciar,janela,tela_principal,tela_bvd = ''):
    if nome == '':
       nome = 'usuario_1'  
@@ -29,7 +27,7 @@ def salvar_configs(dados,nome,p_tempo,p_descanso,iniciar,janela,tela_principal,t
    dados['p_descanso'] = p_descanso
    dados['iniciar_windows'] = iniciar
      
-   with open('ntx_configs.json','w') as file:
+   with open(db.caminho_dados('ntx_configs.json'),'w') as file:
         json.dump(dados,file,indent=4,ensure_ascii=False)
    
    if iniciar == True:
@@ -44,12 +42,12 @@ def salvar_configs(dados,nome,p_tempo,p_descanso,iniciar,janela,tela_principal,t
       config(janela,tela_principal)
                  
 
-#Função para resetar todo o banco de dados + o arquivo de configurações
+#Função para resetar todo o banco de dados + o db.caminho_dados('ntx_configs.json') de configurações
 def reset(janela,tela_principal):
-      if os.path.exists(arquivo):
-         os.remove(arquivo)
+      if os.path.exists(db.caminho_dados('ntx_configs.json')):
+         os.remove(db.caminho_dados('ntx_configs.json'))
       db.reset()
-      if os.path.exists('ntx_configs.json') == False:
+      if os.path.exists(db.caminho_dados('ntx_configs.json')) == False:
          salvar_configs(carregar_configs(),'usuario_1',25,5,False,janela,tela_principal)
 
 #Função para fazer o programa iniciar (ou não) com o computador

@@ -2,7 +2,16 @@ import sqlite3
 import sys
 import os
 
-#Função para localizar imagens e sons na hora de criar o executável
+#Funções para localizar imagens,sons,dados na hora de criar o executável
+def pasta_dados():
+ return os.path.join(os.path.expanduser("~"), "AppData", "Local", "NeoTrax")
+
+def caminho_dados(nome_arquivo):
+ pasta = pasta_dados()
+ if not os.path.exists(pasta):
+    os.makedirs(pasta)
+ return os.path.join(pasta, nome_arquivo)
+
 def caminho(item):
     try:
         caminho_base = sys._MEIPASS
@@ -11,7 +20,7 @@ def caminho(item):
     return os.path.join(caminho_base,item)        
 
 def database():
-    conexao = sqlite3.connect('neotrax.db')
+    conexao = sqlite3.connect(caminho_dados('neotrax.db'))
     cursor = conexao.cursor()
     
     return conexao, cursor

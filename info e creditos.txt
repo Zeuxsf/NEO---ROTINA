@@ -1,0 +1,41 @@
+Seja Bem-Vindo(a) {usuario}, á sua Nova Trilha!
+O NeoTrax foi feito pra te ajudar a organizar sua rotina, com  que vão te possibilitar a ser muito mais produtivo do que você era antes!
+
+Temos a aba de Tarefas do dia atual: Essa aba te vai mostrar as tarefas que você se propôs a fazer no dia atual, sendo a única aba em que você pode pontuar as tarefas, após clicar no botão de encerrar o dia.
+
+Aba de Rotinas em geral: Feita para você ajeitar e visualizar sua rotina sem precisar esperar os dias passarem (essa aba só te permite marcar como feita as tarefas do dia atual, mas não permite encerrar o dia)
+
+Aba de Pontuação: Um quadro para você verificar seu desempenho em concluir suas tarefas, marcando qual é o dia em que você mais pontua, seu dia mais agitado! (Os pontos das tarefas temporárias somem junto com elas, então os únicos pontos que são fixos são os das tarefas fixas)
+
+Aba do Pomodoro: O pomodoro é uma prática muito utilizada para aumentar o desempenho tanto em estudos quanto no horário de trabalho. A prática consiste em ser produtivo e focado em uma determinada quantidade de tempo, e depois descansar outra quantidade de tempo. Aqui no NeoTrax, o timer do pomodoro é totalmente customizável, basta entrar na Aba de Configurações.
+
+O NeoTrax conta com funcionalidades como: 
+Iniciar junto com o sistema: você tem a possibilidade de ativar essa função na aba de configurações. Vai facilitar sua jornada, para que você não se preocupe em ficar abrindo o programa manualmente toda vez que for usar, se o seu objetivo for o uso diário.
+Funcionamento em segundo plano: ao minimizar o programa, ele vai se localizar automaticamente na bandeja de aplicativos da barra de tarefas, para você não se preocupar em perder o horário das suas tarefas!
+Notificações: vai te alertar sobre suas tarefas do dia e sobre o timer do pomodoro.
+
+
+
+
+gpt:
+
+👋 Seja bem-vindo(a), {usuário}, à sua nova trilha!
+O NeoTrax foi criado para te ajudar a organizar sua rotina com ferramentas que vão te tornar muito mais produtivo do que antes!
+🔹 Aba de Tarefas do Dia
+Exibe as tarefas que você se propôs a realizar no dia atual. É a única aba onde você pode pontuar suas tarefas, após clicar no botão "Encerrar Dia".
+🔹 Aba de Rotinas Gerais
+Permite visualizar e ajustar suas rotinas sem precisar esperar os dias passarem. Você pode marcar como feitas apenas as tarefas do dia atual, mas não pode encerrar o dia por aqui.
+🔹 Aba de Pontuação
+Um quadro para você acompanhar seu desempenho ao longo da semana. Mostra qual é o seu dia mais produtivo com base na pontuação!
+Lembre-se: tarefas temporárias somem junto com seus pontos. Apenas as tarefas fixas contam pontos permanentes.
+🔹 Aba do Pomodoro
+O Pomodoro é uma técnica muito utilizada para melhorar foco e rendimento nos estudos e no trabalho. Ela consiste em ciclos de produtividade intercalados com pausas.
+Aqui no NeoTrax, o timer é totalmente customizável, e você pode ajustá-lo na aba de Configurações.
+
+🛠️ Funcionalidades adicionais do NeoTrax:
+
+- Iniciar com o sistema: ative essa opção na aba de configurações para abrir o NeoTrax automaticamente com seu Windows. Ideal para quem pretende usar todos os dias.
+- Funcionamento em segundo plano: ao minimizar o programa, ele vai direto para a bandeja do sistema (perto do relógio), sem atrapalhar sua área de trabalho.
+- Notificações: receba alertas sobre tarefas pendentes e ciclos do Pomodoro, para manter o foco sem precisar ficar conferindo manualmente.
+
+

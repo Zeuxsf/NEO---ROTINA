@@ -142,7 +142,7 @@ def checar_minimizar():
 checar_minimizar()
 
 #Vai criar o arquivo de configurações
-if os.path.exists('ntx_configs.json') == False:
+if os.path.exists(db.caminho_dados('ntx_configs.json')) == False:
     tela_bemvindo = ctk.CTkFrame(janela,1000,650,fg_color='gray2')
     tela_bemvindo.place(x=1,y=1)
     

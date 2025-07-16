@@ -1,0 +1,75 @@
+('C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+ 'GERAL\\NeoTrax\\build\\NeoTrax\\NeoTrax.pkg',
+ {'BINARY': True,
+  'DATA': True,
+  'EXECUTABLE': True,
+  'EXTENSION': True,
+  'PYMODULE': True,
+  'PYSOURCE': True,
+  'PYZ': False,
+  'SPLASH': True,
+  'SYMLINK': False},
+ [('pyi-contents-directory _internal', '', 'OPTION'),
+  ('PYZ-00.pyz',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\build\\NeoTrax\\PYZ-00.pyz',
+   'PYZ'),
+  ('struct',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\build\\NeoTrax\\localpycs\\struct.pyc',
+   'PYMODULE'),
+  ('pyimod01_archive',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\build\\NeoTrax\\localpycs\\pyimod01_archive.pyc',
+   'PYMODULE'),
+  ('pyimod02_importers',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\build\\NeoTrax\\localpycs\\pyimod02_importers.pyc',
+   'PYMODULE'),
+  ('pyimod03_ctypes',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\build\\NeoTrax\\localpycs\\pyimod03_ctypes.pyc',
+   'PYMODULE'),
+  ('pyimod04_pywin32',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\build\\NeoTrax\\localpycs\\pyimod04_pywin32.pyc',
+   'PYMODULE'),
+  ('pyiboot01_bootstrap',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
+   'PYSOURCE'),
+  ('pyi_rth_inspect',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_inspect.py',
+   'PYSOURCE'),
+  ('pyi_rth_setuptools',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_setuptools.py',
+   'PYSOURCE'),
+  ('pyi_rth_pkgutil',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pkgutil.py',
+   'PYSOURCE'),
+  ('pyi_rth_multiprocessing',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_multiprocessing.py',
+   'PYSOURCE'),
+  ('pyi_rth_pkgres',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_pkgres.py',
+   'PYSOURCE'),
+  ('pyi_rth__tkinter',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
+   'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth__tkinter.py',
+   'PYSOURCE'),
+  ('main',
+   'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - GERAL\\NeoTrax\\main.py',
+   'PYSOURCE')],
+ 'python313.dll',
+ True,
+ False,
+ False,
+ [],
+ None,
+ None,
+ None)

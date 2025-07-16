@@ -2,12 +2,13 @@ import customtkinter as ctk
 from PIL import Image
 import conteudo_rotina as r
 import conteudo_config as j
+import ntx_database as db
 
-pause_btn_image = ctk.CTkImage(Image.open('imagens/pausa.png'),size=(40,40))
-play_btn_image = ctk.CTkImage(Image.open('imagens/play.png'),size=(40,40))
-descanso_btn_image = ctk.CTkImage(Image.open('imagens/descanso.png'),size=(40,40))
-iniciar_btn_image = ctk.CTkImage(Image.open('imagens/começar.png'),size=(40,40))
-reiniciar_btn_image = ctk.CTkImage(Image.open('imagens/reiniciar.png'),size=(40,40))
+pause_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/pausa.png')),size=(40,40))
+play_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/play.png')),size=(40,40))
+descanso_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/descanso.png')),size=(40,40))
+iniciar_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/começar.png')),size=(40,40))
+reiniciar_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/reiniciar.png')),size=(40,40))
 
 #Vai iniciar a contagem
 #(o parâmetro "identificador" vai dizer se é o contador de estudo ou de descanso)

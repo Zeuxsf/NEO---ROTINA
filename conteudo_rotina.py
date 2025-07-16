@@ -12,17 +12,17 @@ pygame.init()
 
 #Sistema de notificações reutilizável
 def notificar(titulo, mensagem,som = 'padrao'):
-        icon_path = os.path.abspath('imagens/ntx_logo.ico')
+        icon_path = os.path.abspath(db.caminho('imagens/ntx_logo.ico'))
         notificação = winotify.Notification(app_id='NeoTrax', title= titulo, msg= mensagem,icon=icon_path)
         
         if som == 'padrao':
-            pygame.mixer.music.load('sons/notif_padrao.mp3')
+            pygame.mixer.music.load(db.caminho('sons/notif_padrao.mp3'))
             pygame.mixer.music.play()
         elif som == 'encerrar':
-            pygame.mixer.music.load('sons/encerrar_dia.mp3')
+            pygame.mixer.music.load(db.caminho('sons/encerrar_dia.mp3'))
             pygame.mixer.music.play()
         elif som == 'pomodoro':
-            pygame.mixer.music.load('sons/pomodoro.mp3')
+            pygame.mixer.music.load(db.caminho('sons/pomodoro.mp3'))
             pygame.mixer.music.play()    
                 
         notificação.show()           
@@ -262,8 +262,8 @@ def adicionar_tarefa(
  
     try:
       
-        edit_img = ctk.CTkImage(Image.open('imagens/editar.png'))
-        excluir_img = ctk.CTkImage(Image.open('imagens/excluir.png'))
+        edit_img = ctk.CTkImage(Image.open(db.caminho('imagens/editar.png')))
+        excluir_img = ctk.CTkImage(Image.open(db.caminho('imagens/excluir.png')))
         
       #Título e criação do frame que vai acomodar as infs
         tarefa_criada = ctk.CTkFrame(
@@ -491,7 +491,7 @@ def rotina_atual(janela, tela_principal):
     dias(janela, tela_principal, dia_atual,True)
     
     #Vai desmarcar todas as checkboxs do dia atual e salvar os pontos, possibilitando uma "gamificação" das tarefas
-    encerrar_dia_img = ctk.CTkImage(Image.open('imagens/encerrar_dia.png'),size=(40,40))
+    encerrar_dia_img = ctk.CTkImage(Image.open(db.caminho('imagens/encerrar_dia.png')),size=(40,40))
     def encerrar_dia():
         dados = db.carregar_rotina(dia_atual)
         

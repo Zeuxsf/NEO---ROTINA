@@ -1,10 +1,11 @@
 import customtkinter as ctk
 from PIL import Image
 import conteudo_config as j
+import ntx_database as db
 
 #imagens:
-creditos_btn_image = ctk.CTkImage(Image.open('imagens/prosseguir.png'), size=(30,30))
-informacoes_btn_image = ctk.CTkImage(Image.open('imagens/voltar.png'), size=(30,30))
+creditos_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/prosseguir.png')), size=(30,30))
+informacoes_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/voltar.png')), size=(30,30))
 
 def creditos(janela,tela_principal):
  for widget in janela.winfo_children():

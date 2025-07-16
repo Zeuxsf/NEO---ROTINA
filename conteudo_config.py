@@ -119,7 +119,7 @@ def config(janela,tela_principal):
  salvar_btn.place(x=658,y=455)
  
  #Reseta tudo: banco de dados, configs
- resetar_btn_image = ctk.CTkImage(Image.open('imagens/reiniciar.png'),size=(40,40))
+ resetar_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/reiniciar.png')),size=(40,40))
  reset_btn = ctk.CTkButton(janela,20,20,text='Resetar Programa',font=('',20),command=lambda:reset(janela,tela_principal),fg_color='transparent',hover_color='red',text_color='yellow',image=resetar_btn_image)
  reset_btn.place(x=620,y=520)
  r_subtitulo = ctk.CTkLabel(janela, text="(Use apenas se quiser apagar todos os dados e tarefas do programa e retornar ao padrão)",wraplength=300)

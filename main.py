@@ -24,7 +24,7 @@ janela = ctk.CTk(fg_color='gray2')
 janela.geometry('1000x650')
 janela.resizable(False,False)
 janela.title('NeoTrax')
-janela.iconbitmap('imagens/ntx_logo.ico')
+janela.iconbitmap(db.caminho('imagens/ntx_logo.ico'))
 #ctk.set_appearance_mode('light')
 
 #Uma tela scrolável, pro programa ter liberdade de crescer
@@ -32,14 +32,14 @@ conteudo_frame = ctk.CTkFrame(janela,844,670,fg_color='transparent')
 conteudo_frame.place(x=129,y=10)
 
 #Imagens usadas no programa:
-configbtn_image = ctk.CTkImage(Image.open('imagens/cfg.png'))
-info_btn_image = ctk.CTkImage(Image.open('imagens/inf.png'))
-rotina_atualbtn_image = ctk.CTkImage(Image.open('imagens/rotina_atual.png'), size=(40,40))
-rotinas_btn_image = ctk.CTkImage(Image.open('imagens/rotinas.png'), size=(30,30))
-pontos_btn_image = ctk.CTkImage(Image.open('imagens/pontuacao.png'), size=(40,40))
-pomodoro_btn_image = ctk.CTkImage(Image.open('imagens/pomodoro.png'), size=(40,40))
-prosseguir_btn_image = ctk.CTkImage(Image.open('imagens/prosseguir.png'), size=(50,50))
-icone = Image.open('imagens/ntx_logo.ico')
+configbtn_image = ctk.CTkImage(Image.open(db.caminho('imagens/cfg.png')))
+info_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/inf.png')))
+rotina_atualbtn_image = ctk.CTkImage(Image.open(db.caminho('imagens/rotina_atual.png')), size=(40,40))
+rotinas_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/rotinas.png')), size=(30,30))
+pontos_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/pontuacao.png')), size=(40,40))
+pomodoro_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/pomodoro.png')), size=(40,40))
+prosseguir_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/prosseguir.png')), size=(50,50))
+icone = Image.open(db.caminho('imagens/ntx_logo.ico'))
 
 #Configurações da Aba Lateral, a Navegação do programa
 aba = ctk.CTkFrame(janela,120,680,fg_color='gray4')

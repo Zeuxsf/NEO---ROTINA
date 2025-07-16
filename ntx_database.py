@@ -1,6 +1,14 @@
 import sqlite3
+import sys
+import os
 
 #Função para localizar imagens e sons na hora de criar o executável
+def caminho(item):
+    try:
+        caminho_base = sys._MEIPASS
+    except AttributeError:
+        caminho_base = os.path.abspath('.')
+    return os.path.join(caminho_base,item)        
 
 def database():
     conexao = sqlite3.connect('neotrax.db')

@@ -1,5 +1,7 @@
 import sqlite3
 
+#Função para localizar imagens e sons na hora de criar o executável
+
 def database():
     conexao = sqlite3.connect('neotrax.db')
     cursor = conexao.cursor()

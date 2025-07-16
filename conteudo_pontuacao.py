@@ -9,7 +9,9 @@ def criar_gráfico(janela):
     nome_dia.place(x=1,y=30)
     
     progress = ctk.CTkProgressBar(janela,800,50,corner_radius=19,fg_color='gray2',progress_color='yellow')
-    progress.set(db.buscar_pontos_totais('Monday')/1000)
+    progress.set(db.buscar_pontos_totais('Monday')/500)
+    if db.buscar_pontos_totais('Monday') == 0:
+      progress.configure(progress_color='gray2')
     progress.place(x=25, y= 18)
     
     return(db.buscar_pontos_totais('Monday'),db.buscar_pontos_totais('Monday','tarefa'))
@@ -19,7 +21,9 @@ def criar_gráfico(janela):
     nome_dia.place(x=1,y=87)
     
     progress = ctk.CTkProgressBar(janela,800,50,corner_radius=19,fg_color='gray2',progress_color='yellow')
-    progress.set(db.buscar_pontos_totais('Tuesday')/1000)
+    progress.set(db.buscar_pontos_totais('Tuesday')/500)
+    if db.buscar_pontos_totais('Tuesday') == 0:
+      progress.configure(progress_color='gray2')
     progress.place(x=25, y= 75)
     
     return(db.buscar_pontos_totais('Tuesday'),db.buscar_pontos_totais('Tuesday','tarefa'))
@@ -29,7 +33,9 @@ def criar_gráfico(janela):
     nome_dia.place(x=1,y=144)
     
     progress = ctk.CTkProgressBar(janela,770,50,corner_radius=19,fg_color='gray2',progress_color='yellow')
-    progress.set(db.buscar_pontos_totais('Wednesday')/1000)
+    progress.set(db.buscar_pontos_totais('Wednesday')/500)
+    if db.buscar_pontos_totais('Wednesday') == 0:
+      progress.configure(progress_color='gray2')  
     progress.place(x=25, y= 132)
     
     return(db.buscar_pontos_totais('Wednesday'),db.buscar_pontos_totais('Wednesday','tarefa'))
@@ -39,7 +45,9 @@ def criar_gráfico(janela):
     nome_dia.place(x=1,y=201)
     
     progress = ctk.CTkProgressBar(janela,770,50,corner_radius=19,fg_color='gray2',progress_color='yellow')
-    progress.set(db.buscar_pontos_totais('Thursday')/1000)
+    progress.set(db.buscar_pontos_totais('Thursday')/500)
+    if db.buscar_pontos_totais('Thursday') == 0:
+      progress.configure(progress_color='gray2') 
     progress.place(x=25, y= 189)
     
     return(db.buscar_pontos_totais('Thursday'),db.buscar_pontos_totais('Thursday','tarefa'))
@@ -49,7 +57,9 @@ def criar_gráfico(janela):
     nome_dia.place(x=1,y=258)
     
     progress = ctk.CTkProgressBar(janela,770,50,corner_radius=19,fg_color='gray2',progress_color='yellow')
-    progress.set(db.buscar_pontos_totais('Friday')/1000)
+    progress.set(db.buscar_pontos_totais('Friday')/500)
+    if db.buscar_pontos_totais('Friday') == 0:
+      progress.configure(progress_color='gray2') 
     progress.place(x=25, y= 246)
     
     return(db.buscar_pontos_totais('Friday'),db.buscar_pontos_totais('Friday','tarefa'))
@@ -59,7 +69,9 @@ def criar_gráfico(janela):
     nome_dia.place(x=1,y=315)
     
     progress = ctk.CTkProgressBar(janela,770,50,corner_radius=19,fg_color='gray2',progress_color='yellow')
-    progress.set(db.buscar_pontos_totais('Saturday')/1000)
+    progress.set(db.buscar_pontos_totais('Saturday')/500)
+    if db.buscar_pontos_totais('Saturday') == 0:
+      progress.configure(progress_color='gray2') 
     progress.place(x=25, y= 303)
     
     return(db.buscar_pontos_totais('Saturday'),db.buscar_pontos_totais('Saturday','tarefa'))
@@ -69,7 +81,9 @@ def criar_gráfico(janela):
     nome_dia.place(x=1,y=372)
     
     progress = ctk.CTkProgressBar(janela,770,50,corner_radius=19,fg_color='gray2',progress_color='yellow')
-    progress.set(db.buscar_pontos_totais('Sunday')/1000)
+    progress.set(db.buscar_pontos_totais('Sunday')/500)
+    if db.buscar_pontos_totais('Sunday') == 0:
+      progress.configure(progress_color='gray2') 
     progress.place(x=25, y= 360)
     
     return(db.buscar_pontos_totais('Sunday'),db.buscar_pontos_totais('Sunday','tarefa'))                      

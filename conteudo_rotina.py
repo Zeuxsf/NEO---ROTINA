@@ -349,7 +349,7 @@ def adicionar_tarefa(
                 db.cursor.execute('''UPDATE trax SET pontos = pontos + 1
                                       WHERE id = ?''',(id_linha,))
                 
-                db.cursor.execute('''UPDATE trax SET pontos = pontos + 1
+                db.cursor.execute('''UPDATE trax SET pontos = pontos + 4
                                       WHERE temporario = 1 AND id = ?''',(id_linha,))
                 
                 db.cursor.execute('''UPDATE trax SET checkbox = 1
@@ -359,7 +359,7 @@ def adicionar_tarefa(
                 db.cursor.execute('''UPDATE trax SET pontos = pontos - 1
                                   WHERE id = ?''', (id_linha,))
 
-                db.cursor.execute('''UPDATE trax SET pontos = pontos - 1
+                db.cursor.execute('''UPDATE trax SET pontos = pontos - 4
                                       WHERE temporario = 1 AND id = ?''',(id_linha,))
                 
                 db.cursor.execute('''UPDATE trax SET checkbox = 2
@@ -367,7 +367,7 @@ def adicionar_tarefa(
                      
             db.conexao.commit()
           
-        check = ctk.CTkCheckBox(tarefa_criada,text="",width=35,checkbox_width=35,checkbox_height=35,fg_color='yellow',checkmark_color="gray2",variable=estado_checkbox,onvalue=1,offvalue=2,command= chechagem,hover_color='gold3',border_color='yellow')
+        check = ctk.CTkCheckBox(tarefa_criada,text="",width=35,checkbox_width=35,checkbox_height=35,fg_color='gray2',checkmark_color="yellow",variable=estado_checkbox,onvalue=1,offvalue=2,command= chechagem,hover_color='gray2',border_color='yellow')
         check.place(x=635, y=10)
            
         dia_atual = decidir_dia_atual()

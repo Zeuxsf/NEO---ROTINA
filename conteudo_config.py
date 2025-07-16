@@ -5,6 +5,7 @@ import ntx_database as db
 from PIL import Image
 import winreg
 import sys
+import conteudo_info
 
 arquivo = 'ntx_configs.json'
 
@@ -21,10 +22,7 @@ def carregar_configs():
 #Função para salvar os dados alterados no arquivo
 def salvar_configs(dados,nome,p_tempo,p_descanso,iniciar,janela,tela_principal,tela_bvd = ''):
    if nome == '':
-      nome = 'usuario_1'
-      
-   if tela_bvd != '':
-      tela_bvd.destroy()   
+      nome = 'usuario_1'  
    
    dados['usuario'] = nome
    dados['p_tempo'] = p_tempo
@@ -38,8 +36,12 @@ def salvar_configs(dados,nome,p_tempo,p_descanso,iniciar,janela,tela_principal,t
       iniciar_com_windows(True)
    else:
       iniciar_com_windows(False)   
-       
-   config(janela,tela_principal)
+
+   if tela_bvd != '':
+      tela_bvd.destroy()
+      conteudo_info.info(janela,tela_principal)
+   else:        
+      config(janela,tela_principal)
                  
 
 #Função para resetar todo o banco de dados + o arquivo de configurações

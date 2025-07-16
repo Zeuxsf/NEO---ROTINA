@@ -154,6 +154,9 @@ if os.path.exists('ntx_configs.json') == False:
     
     prosseguir_btn = ctk.CTkButton(tela_bemvindo,image=prosseguir_btn_image,text='',fg_color='transparent',hover_color='gray2',command=lambda: j.salvar_configs(dados,nome_usuario.get(),25,5,False,conteudo_frame,janela,tela_bemvindo))
     prosseguir_btn.place(x=420,y=450)
+    
+else:
+    esconder_programa()    
 
 #Encerrando programa e banco de dados
 janela.mainloop()

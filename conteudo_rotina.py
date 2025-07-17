@@ -525,6 +525,9 @@ def rotinas(janela, tela_principal):
     title = ctk.CTkLabel(janela,text='Escolha uma rotina para editar',font = ('',30),text_color='gray9')
     title.place(x=260,y=355)
     
+    tampa = ctk.CTkFrame(tela_principal,100,900,fg_color='gray2')
+    tampa.place(x=1000,y=-2)
+    
     segunda_btn = ctk.CTkButton(tela_principal,70,70,text='S',command=lambda:dias(janela,tela_principal,'Monday'),font=('',30),text_color='gray69',hover_color='gray2',fg_color='transparent')
     segunda_btn.place(x=1000,y=35)
         

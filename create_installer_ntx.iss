@@ -1,6 +1,6 @@
 [Setup]
 AppName=NeoTrax
-AppVersion=1.0
+AppVersion=1.0.2
 DefaultDirName={autopf}\NeoTrax
 DefaultGroupName=NeoTrax
 UninstallDisplayIcon={app}\NeoTrax.exe

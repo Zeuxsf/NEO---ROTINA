@@ -92,7 +92,7 @@
  [],
  False,
  False,
- 1752757388,
+ 1752762898,
  [('runw.exe',
    'C:\\Users\\Pichau\\Desktop\\Codigo\\VSCODE - '
    'GERAL\\NeoTrax\\venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',

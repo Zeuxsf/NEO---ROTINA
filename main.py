@@ -89,6 +89,7 @@ def loop_diario(tela_principal):
         tela_principal.after(1000, lambda: loop_diario(janela))
 
 def recarregar_notifi():
+    schedule.clear()
     
     dia_atual = decidir_dia_atual()    
     dados = db.carregar_rotina(dia_atual)
@@ -106,7 +107,7 @@ def recarregar_notifi():
         except Exception as e:
             print('Notificação inexistente.',e)    
 
-schedule.every(5).seconds.do(recarregar_notifi)            
+schedule.every(1).minute.do(recarregar_notifi)            
 loop_diario(janela)
 
 #Área para levar o programa minimizado para a bandeja de aplicativos e deixar rodando em segundo plano

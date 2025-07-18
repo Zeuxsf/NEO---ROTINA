@@ -89,25 +89,25 @@ def loop_diario(tela_principal):
         tela_principal.after(1000, lambda: loop_diario(janela))
 
 def recarregar_notifi():
-    schedule.clear()
+    schedule.clear('notifi')
+    schedule.clear('notifi2')
     
     dia_atual = decidir_dia_atual()    
     dados = db.carregar_rotina(dia_atual)
     dados_ontem = db.carregar_rotina(ontem)
     
     #Aproveitando o sistema de verificação das notificações para poder excluir as tarefas temporarias do dia anterior, sempre checando caso o usuário use o programa aberto direto, sem fechar
-    for linha in dados_ontem:
-        db.cursor.execute('''DELETE FROM trax WHERE temporario = ? AND dia = ?''',('1',ontem))
-        db.conexao.commit()
+    db.cursor.execute('''DELETE FROM trax WHERE temporario = ? AND dia = ?''',('1',ontem))
+    db.conexao.commit()
             
     for linha in dados:
         try:        
-            schedule.every().day.at(linha[4]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Começando: {t}',i))    
-            schedule.every().day.at(linha[5]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Encerrando: {t}',i))
+            schedule.every().day.at(linha[4]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Começando: {t}',i)).tag('notifi')    
+            schedule.every().day.at(linha[5]).do(lambda t= linha[1], i= linha[2]: conteudo_rotina.notificar(f'Encerrando: {t}',i)).tag('notifi2')
         except Exception as e:
             print('Notificação inexistente.',e)    
 
-schedule.every(1).minute.do(recarregar_notifi)            
+schedule.every(1).second.do(recarregar_notifi)            
 loop_diario(janela)
 
 #Área para levar o programa minimizado para a bandeja de aplicativos e deixar rodando em segundo plano
@@ -157,7 +157,9 @@ if os.path.exists(db.caminho_dados('ntx_configs.json')) == False:
     prosseguir_btn.place(x=420,y=450)
     
 else:
-    esconder_programa()    
+    esconder_programa()
+    usuario = conteudo_config.carregar_configs()['usuario']
+    conteudo_rotina.notificar('Iniciando...',f'Seja bem vindo(a) de volta {usuario}!')    
 
 #Encerrando programa e banco de dados
 janela.mainloop()

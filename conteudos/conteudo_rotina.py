@@ -6,7 +6,7 @@ import os
 import winotify
 from PIL import Image
 import pygame
-import conteudo_config as j
+import conteudos.conteudo_config as j
 
 pygame.init()
 

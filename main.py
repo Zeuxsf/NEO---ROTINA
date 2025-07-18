@@ -1,16 +1,16 @@
 import customtkinter as ctk
-import conteudo_rotina as conteudo_rotina 
-import conteudo_config as conteudo_config
-import conteudo_info as conteudo_info
-import conteudo_pomodoro as conteudo_pomodoro
-import conteudo_pontuacao as conteudo_pontuacao
+import conteudos.conteudo_rotina as conteudo_rotina 
+import conteudos.conteudo_config as conteudo_config
+import conteudos.conteudo_info as conteudo_info
+import conteudos.conteudo_pomodoro as conteudo_pomodoro
+import conteudos.conteudo_pontuacao as conteudo_pontuacao
 from PIL import Image
 import datetime
 import schedule
 from pystray import Icon, MenuItem as item,Menu
 import threading
 import ntx_database as db
-import conteudo_config as j
+import conteudos.conteudo_config as j
 import os
 
 #Lógica que usa lib datetime para pegar os dias e horários e transforma eles em string

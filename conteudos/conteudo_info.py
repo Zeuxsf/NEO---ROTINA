@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from PIL import Image
-import conteudo_config as j
+import conteudos.conteudo_config as j
 import ntx_database as db
 
 #imagens:

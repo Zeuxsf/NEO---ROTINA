@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
-import conteudo_rotina as r
-import conteudo_config as j
+import conteudos.conteudo_rotina as r
+import conteudos.conteudo_config as j
 import ntx_database as db
 
 pause_btn_image = ctk.CTkImage(Image.open(db.caminho('imagens/pausa.png')),size=(40,40))

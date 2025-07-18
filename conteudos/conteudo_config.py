@@ -5,7 +5,7 @@ import ntx_database as db
 from PIL import Image
 import winreg
 import sys
-import conteudo_info
+import conteudos.conteudo_info as conteudo_info
 
 #Função para carregar o db.caminho_dados('ntx_configs.json') json
 def carregar_configs():   

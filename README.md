@@ -1,5 +1,5 @@
 ![neotrax banner](https://github.com/user-attachments/assets/5d212862-aa32-4a41-bc5e-b1ddb2327129)
-#NeoTrax: Organizador Pessoal de Rotinas
+# NeoTrax: Organizador Pessoal de Rotinas
 
 ### O que é o NeoTrax?
 

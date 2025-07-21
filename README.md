@@ -6,12 +6,6 @@
 O NeoTrax é um organizador pessoal criado para te ajudar a manter o foco, cumprir tarefas e acompanhar seu progresso — tudo de forma simples e funcional.
 Você pode criar tarefas para cada dia da semana e organizar sua rotina fixa, pensado para quem quer manter um ritmo e evitar que atividades fora do planejado atrapalhem sua produtividade.
 
-### Tecnologias utilizadas
-
-- IDE: VSCode
-- Linguagem: Python 3.13.1
-- Bibliotecas principais: CustomTkinter, SQLite
-
 ### Estado atual do app
 
 - Criação e gerenciamento de tarefas com interface intuitiva
@@ -22,6 +16,19 @@ Você pode criar tarefas para cada dia da semana e organizar sua rotina fixa, pe
 - Aba de pontuação para acompanhar seu desempenho e evolução
 
  Versão: 1.0.5 - Compatibilidade: Windows
+
+### Tecnologias utilizadas
+
+- IDE: VSCode
+- Linguagem: Python 3.13.1
+- Bibliotecas principais: CustomTkinter, SQLite
+
+### Como clonar e utilizar o repositório
+
+- Clonando o Repositório: Use `git clone https://github.com/Zeuxsf/NeoTrax.git` e depois `cd NeoTrax`
+- Crie e ative um ambiente virtual (Windows): Use `python -m venv venv` e depois `venv\Scripts\activate`
+- Instale as dependências do código: Use `pip install -r requirements.txt`
+- Para executar o código você pode usar a sua IDE de preferência ou via Terminal: Use `python main.py`
 
 ### Sobre o desenvolvimento
 
